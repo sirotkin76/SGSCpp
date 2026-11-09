@@ -4,12 +4,12 @@
 
 #include "Engine.h"
 #include "Net/UnrealNetwork.h"
-#include "Data/SGSCppV4_Interactable.h"
+#include "Data/SGSCppV4_Interface_Interactable.h"
 #include "GameFramework/Actor.h"
 #include "SGSCppV4_ActorInteractable.generated.h"
 
 UCLASS()
-class SIRGASSYSTEMRUNTIME_API ASGSCppV4_ActorInteractable : public AActor, public ISGSCppV4_Interactable
+class SIRGASSYSTEMRUNTIME_API ASGSCppV4_ActorInteractable : public AActor, public ISGSCppV4_Interface_Interactable
 {
 	GENERATED_BODY()
 

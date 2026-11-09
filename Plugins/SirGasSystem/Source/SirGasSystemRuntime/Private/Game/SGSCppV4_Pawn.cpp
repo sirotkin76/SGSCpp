@@ -32,7 +32,7 @@ void ASGSCppV4_Pawn::BeginPlay()
 {
 	Super::BeginPlay();
 	
-	SGSCppV4_Component_Character_Init->FSGSCppInitializationCharacterAttrubite(AbilitySystemComponent);
+	SGSCppV4_Component_Character_Init->FSGSCppInitializationCharacterAttrubite(AbilitySystemComponent, AttributeSet);
 
 	//GEngine->AddOnScreenDebugMessage(-1, 50.f, FColor::Blue, TEXT("BeginPlay")); // print string
 	
@@ -109,6 +109,12 @@ void ASGSCppV4_Pawn::Tick(float DeltaTime)
 void ASGSCppV4_Pawn::SetupPlayerInputComponent(UInputComponent* PlayerInputComponent)
 {
 	Super::SetupPlayerInputComponent(PlayerInputComponent);
+}
+
+USGSCppV4_Component_Character_Init* ASGSCppV4_Pawn::SGSCppV4_Bfl_GetGameplayAbility_Implementation() const
+{
+	if (IsValid(SGSCppV4_Component_Character_Init))	return SGSCppV4_Component_Character_Init;
+	return nullptr;
 }
 
 int32 ASGSCppV4_Pawn::FSGSCppGetCharacterLevel() const

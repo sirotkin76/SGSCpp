@@ -1,4 +1,4 @@
 // Copyright (c) 2026 SirotkinAleksandr. All Rights Reserved.
 
 
-#include "Data/SGSCppV4_Interactable.h"
+#include "Data/SGSCppV4_Interface_Interactable.h"

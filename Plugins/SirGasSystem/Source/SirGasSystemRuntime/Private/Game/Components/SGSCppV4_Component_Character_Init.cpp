@@ -5,6 +5,7 @@
 #include "AbilitySystemBlueprintLibrary.h"
 #include "AbilitySystemComponent.h"
 #include "AbilitySystemLog.h"
+#include "Abilities/SGSCppV4_AttributeSet.h"
 
 
 //#include "Game/SGSCppCharacterV4.h"
@@ -70,7 +71,7 @@ void USGSCppV4_Component_Character_Init::FSGSCppSetCharacterLevel(int32 NewLevel
 	}
 }
 
-void USGSCppV4_Component_Character_Init::FSGSCppInitializationCharacterAttrubite(USGSCppV4_AbilitySystemComponent * AbilitySystemComponent)
+void USGSCppV4_Component_Character_Init::FSGSCppInitializationCharacterAttrubite(USGSCppV4_AbilitySystemComponent * AbilitySystemComponent, USGSCppV4_AttributeSet* SGSCppV4_AttributeSet)
 {
 	if (!bAbilitiesInitialized)
 	{
@@ -81,6 +82,8 @@ void USGSCppV4_Component_Character_Init::FSGSCppInitializationCharacterAttrubite
 		}
 		
 		ASC = AbilitySystemComponent;
+		AttributeSet = SGSCppV4_AttributeSet;
+		
 		GetAbilitySystemComponent()->InitAbilityActorInfo(GetOwner(), GetOwner());
 
 		if (IsValid(SGSCppV4_DataAssetInit)) FSGSCppAddArrNewGameplayAbility(SGSCppV4_DataAssetInit->GameplayAbilities);
@@ -313,6 +316,74 @@ bool USGSCppV4_Component_Character_Init::FSGSCppGetCooldownRemainingForTag(FGame
 		}
 	}
 	return false;
+}
+
+void USGSCppV4_Component_Character_Init::FSGSCppV4_GetHealth(float& Health, float& HealthMax, float &Percent)
+{
+	Health = AttributeSet->GetHealth();
+	HealthMax = AttributeSet->GetMaxHealth();
+	Percent = Health / HealthMax;
+}
+
+void USGSCppV4_Component_Character_Init::FSGSCppV4_GetStamina(float& Stamina, float& StaminaMax, float &Percent)
+{
+	Stamina = AttributeSet->GetStamina();
+	StaminaMax = AttributeSet->GetMaxStamina();
+	Percent = Stamina / StaminaMax;
+}
+
+void USGSCppV4_Component_Character_Init::FSGSCppV4_Mana(float& Mana, float& ManaMax, float& Percent)
+{
+	Mana = AttributeSet->GetMana();
+	ManaMax = AttributeSet->GetMaxMana();
+	Percent = Mana / ManaMax;
+}
+
+void USGSCppV4_Component_Character_Init::FSGSCppV4_GetCharacterAttr(float& AttackPower, float& DefensePower,
+	float& MoveSpeed, float& Damage)
+{
+	AttackPower = AttributeSet->GetAttackPower();
+	DefensePower = AttributeSet->GetDefensePower();
+	MoveSpeed = AttributeSet->GetMoveSpeed();
+	Damage = AttributeSet->GetDamage();
+}
+
+void USGSCppV4_Component_Character_Init::FSGSCppV4_GetExperience(float& Experience, float& ExperienceMax,
+	float& Percent)
+{
+	Experience = AttributeSet->GetExperienceCur();
+	ExperienceMax = AttributeSet->GetExperienceMax();
+	Percent = Experience / ExperienceMax;
+}
+
+void USGSCppV4_Component_Character_Init::FSGSCppV4_GetWater(float& Water, float& WaterMax, float& Percent)
+{
+	Water = AttributeSet->GetWater();
+	WaterMax = AttributeSet->GetMaxWater();
+	Percent = Water / WaterMax;
+}
+
+void USGSCppV4_Component_Character_Init::FSGSCppV4_GetFood(float& Food, float& FoodMax, float& Percent)
+{
+	Food = AttributeSet->GetFood();
+	FoodMax = AttributeSet->GetMaxFood();
+	Percent = Food / FoodMax;
+}
+
+void USGSCppV4_Component_Character_Init::FSGSCppV4_GetOxygen(float& Oxygen, float& OxygenMax, float& Percent)
+{
+	Oxygen = AttributeSet->GetOxygen();
+	OxygenMax = AttributeSet->GetMaxOxygen();
+	Percent = Oxygen / OxygenMax;
+}
+
+
+void USGSCppV4_Component_Character_Init::FSGSCppSetHealth(float SetNewHealth)
+{
+	if (AttributeSet)
+	{
+		AttributeSet->SetHpAndMaxHp(SetNewHealth, AttributeSet->GetMaxHealth());
+	}
 }
 
 

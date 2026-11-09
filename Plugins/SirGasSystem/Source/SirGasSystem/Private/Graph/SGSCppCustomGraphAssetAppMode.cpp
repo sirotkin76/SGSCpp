@@ -38,7 +38,8 @@ SGSCppCustomGraphAssetAppMode::SGSCppCustomGraphAssetAppMode(TSharedPtr<SGSCppCu
 void SGSCppCustomGraphAssetAppMode::RegisterTabFactories(TSharedPtr<class FTabManager> InTabManager) {
     TSharedPtr<SGSCppCustomGraphAssetEditorApp> app = _app.Pin();
 	app->PushTabFactories(_tabs);
-	FApplicationMode::RegisterTabFactories(InTabManager);
+	//FApplicationMode::RegisterTabFactoriesWithAppAndManager(GetHost().Get(), InTabManager);
+	FApplicationMode::RegisterTabFactoriesWithAppAndManager(GetHost().Get(), InTabManager.ToSharedRef());
 }
 
 void SGSCppCustomGraphAssetAppMode::PreDeactivateMode() {

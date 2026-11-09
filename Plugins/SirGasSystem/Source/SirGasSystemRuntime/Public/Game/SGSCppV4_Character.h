@@ -10,6 +10,7 @@
 #include "AbilitySystemInterface.h"
 #include "Abilities/SGSCppV4_AttributeSet.h"
 #include "Abilities/SGSCppV4_AbilitySystemComponent.h"
+#include "Data/SGSCppV4_Interface_GameplayAbility.h"
 
 #include "SGSCppV4_Character.generated.h"
 
@@ -18,7 +19,7 @@ class UGameplayEffect;
 class USGSCppV4_Component_Character_Init;
 
 UCLASS()
-class SIRGASSYSTEMRUNTIME_API ASGSCppV4_Character : public ACharacter, public IAbilitySystemInterface, public IGenericTeamAgentInterface
+class SIRGASSYSTEMRUNTIME_API ASGSCppV4_Character : public ACharacter, public IAbilitySystemInterface, public IGenericTeamAgentInterface, public ISGSCppV4_Interface_GameplayAbility
 {
 	GENERATED_BODY()
 
@@ -43,9 +44,10 @@ public:
 
 	UFUNCTION(BlueprintPure, Category = "FSGSCpp|Getter")
 	USGSCppV4_AbilitySystemComponent* GetSGSCppAbilitySystemComponent();
+	
+	//UFUNCTION(BlueprintNativeEvent, BlueprintCallable, Category = "SGSCppV4|InterfaceFunction")
+	USGSCppV4_Component_Character_Init* SGSCppV4_Bfl_GetGameplayAbility_Implementation() const;
 
-
-public:
 	// Called every frame
 	virtual void Tick(float DeltaTime) override;
 
@@ -111,35 +113,10 @@ public:
 
 	UFUNCTION(BlueprintPure, Category = "FSGSCpp|Getter")
 	USGSCppV4_AttributeSet* FSGSCppGetAttributeSet();
-	
-	/** Returns maximum health, health will never be greater than this */
-	UFUNCTION(BlueprintCallable, Category = "FSGSCpp|Getter")
-	virtual float FSGSCppGetMaxHealth() const;
-
-	/** Returns current mana */
-	UFUNCTION(BlueprintCallable, Category = "FSGSCpp|Getter")
-	virtual float FSGSCppGetMana() const;
-
-	/** Returns maximum mana, mana will never be greater than this */
-	UFUNCTION(BlueprintCallable, Category = "FSGSCpp|Getter")
-	virtual float FSGSCppGetMaxMana() const;
-
-	/** Returns current movement speed */
-	UFUNCTION(BlueprintCallable, Category = "FSGSCpp|Getter")
-	virtual float FSGSCppGetMoveSpeed() const;
-
-	UFUNCTION(BlueprintCallable, Category = "FSGSCpp|Getter")
-	virtual float FSGSCppGetHealth() const;
 
 	UFUNCTION(BlueprintPure, Category = "FSGSCpp|Getter")
 	virtual bool FSGSCppGetIsAlive();
-
-	/**
-	* Данные Setter
-	*/
-
-	UFUNCTION(BlueprintCallable, Category = "FSGSCpp|Setter")
-	void FSGSCppSetHealth(float SetNewHealth);
+	
 
 protected:
 	/** The component used to handle ability system interactions */

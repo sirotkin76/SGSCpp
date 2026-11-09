@@ -119,7 +119,6 @@ public:
 	FGameplayAttributeData MaxOxygen;
 	ATTRIBUTE_ACCESSORS(USGSCppV4_AttributeSet, MaxOxygen)
 
-	
 	/** Attr */
 	UFUNCTION(BlueprintCallable, Category = "Attr")
 	void SetHpAndMaxHp(float NewHpCurLocal, float NewHpMaxLocal);

@@ -9,6 +9,8 @@
 #include "Kismet/BlueprintFunctionLibrary.h"
 #include "SGSCppV4_BFL.generated.h"
 
+class USGSCppV4_Component_Storage;
+
 /**
  * 
  */

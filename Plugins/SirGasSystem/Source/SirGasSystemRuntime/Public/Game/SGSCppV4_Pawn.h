@@ -11,12 +11,13 @@
 #include "Abilities/SGSCppV4_AttributeSet.h"
 #include "Abilities/SGSCppV4_AbilitySystemComponent.h"
 #include "Components/SGSCppV4_Component_Character_Init.h"
+#include "Data/SGSCppV4_Interface_GameplayAbility.h"
 
 #include "SGSCppV4_Pawn.generated.h"
 
 
 UCLASS()
-class SIRGASSYSTEMRUNTIME_API ASGSCppV4_Pawn : public APawn, public IAbilitySystemInterface, public IGenericTeamAgentInterface
+class SIRGASSYSTEMRUNTIME_API ASGSCppV4_Pawn : public APawn, public IAbilitySystemInterface, public IGenericTeamAgentInterface, public ISGSCppV4_Interface_GameplayAbility
 {
 	GENERATED_BODY()
 	
@@ -56,6 +57,9 @@ public:
 
 	// Called to bind functionality to input
 	virtual void SetupPlayerInputComponent(class UInputComponent* PlayerInputComponent) override;
+
+	//UFUNCTION(BlueprintNativeEvent, BlueprintCallable, Category = "SGSCppV4|InterfaceFunction")
+	USGSCppV4_Component_Character_Init* SGSCppV4_Bfl_GetGameplayAbility_Implementation() const;
 
 	/**
 	 * Called when character takes damage, which may have killed them

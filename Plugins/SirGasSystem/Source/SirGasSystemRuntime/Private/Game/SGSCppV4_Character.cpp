@@ -28,16 +28,12 @@ void ASGSCppV4_Character::BeginPlay()
 {
 	Super::BeginPlay();
 
-	//GEngine->AddOnScreenDebugMessage(-1, 50.f, FColor::Blue, TEXT("BeginPlay")); // print string
-	
-	SGSCppV4_Component_Character_Init->FSGSCppInitializationCharacterAttrubite(AbilitySystemComponent);
+	SGSCppV4_Component_Character_Init->FSGSCppInitializationCharacterAttrubite(AbilitySystemComponent, FSGSCppGetAttributeSet());
 }
 
 void ASGSCppV4_Character::PossessedBy(AController* NewController)
 {
 	Super::PossessedBy(NewController);
-
-	//GEngine->AddOnScreenDebugMessage(-1, 50.f, FColor::Blue, TEXT("PossessedBy")); // print string
 }
 
 void ASGSCppV4_Character::UnPossessed()
@@ -65,35 +61,10 @@ USGSCppV4_AbilitySystemComponent* ASGSCppV4_Character::GetSGSCppAbilitySystemCom
 	return AbilitySystemComponent;
 }
 
-float ASGSCppV4_Character::FSGSCppGetHealth() const
+USGSCppV4_Component_Character_Init* ASGSCppV4_Character::SGSCppV4_Bfl_GetGameplayAbility_Implementation() const
 {
-	if (!AttributeSet)
-		return 1.f;
-
-	return AttributeSet->GetHealth();
-}
-
-void ASGSCppV4_Character::FSGSCppSetHealth(float SetNewHealth)
-{
-	if (AttributeSet)
-	{
-		AttributeSet->SetHpAndMaxHp(SetNewHealth, FSGSCppGetMaxHealth());
-	}
-}
-
-float ASGSCppV4_Character::FSGSCppGetMaxHealth() const
-{
-	return AttributeSet->GetMaxHealth();
-}
-
-float ASGSCppV4_Character::FSGSCppGetMana() const
-{
-	return AttributeSet->GetMana();
-}
-
-float ASGSCppV4_Character::FSGSCppGetMaxMana() const
-{
-	return AttributeSet->GetMaxMana();
+	if (IsValid(SGSCppV4_Component_Character_Init))	return SGSCppV4_Component_Character_Init;
+	return nullptr;
 }
 
 // Called every frame
@@ -106,11 +77,6 @@ void ASGSCppV4_Character::Tick(float DeltaTime)
 void ASGSCppV4_Character::SetupPlayerInputComponent(UInputComponent* PlayerInputComponent)
 {
 	Super::SetupPlayerInputComponent(PlayerInputComponent);
-}
-
-float ASGSCppV4_Character::FSGSCppGetMoveSpeed() const
-{
-	return AttributeSet->GetMoveSpeed();
 }
 
 USGSCppV4_AttributeSet* ASGSCppV4_Character::FSGSCppGetAttributeSet()
@@ -150,7 +116,7 @@ void ASGSCppV4_Character::HandleManaChanged(float DeltaValue, const struct FGame
 void ASGSCppV4_Character::HandleMoveSpeedChanged(float DeltaValue, const struct FGameplayTagContainer& EventTags)
 {
 	// Update the character movement's walk speed
-	GetCharacterMovement()->MaxWalkSpeed = FSGSCppGetMoveSpeed();
+	GetCharacterMovement()->MaxWalkSpeed = AttributeSet->GetMoveSpeed();;
 
 	if (IsValid(GetAbilitySystemComponent()))
 	{
@@ -200,5 +166,9 @@ FGenericTeamId ASGSCppV4_Character::GetGenericTeamId() const
 
 bool ASGSCppV4_Character::FSGSCppGetIsAlive()
 {
-	return FSGSCppGetHealth() > 0.0f;
+	return AttributeSet->GetMaxHealth() > 0.0f;
 }
+
+//GEngine->AddOnScreenDebugMessage(-1, 50.f, FColor::Blue, TEXT("BeginPlay")); // print string
+	
+//GEngine->AddOnScreenDebugMessage(-1, 50.f, FColor::Blue, TEXT("PossessedBy")); // print string

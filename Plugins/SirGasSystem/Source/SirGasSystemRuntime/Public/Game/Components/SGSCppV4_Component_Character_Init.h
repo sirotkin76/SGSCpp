@@ -43,6 +43,9 @@ public:
 	
 	UPROPERTY()
 	UAbilitySystemComponent * ASC ;
+	
+	UPROPERTY()
+	USGSCppV4_AttributeSet* AttributeSet;
 
 	UPROPERTY()
 	TArray<UGameplayAbility * > V4_ArrActiveAbilities;
@@ -71,7 +74,7 @@ public:
 
 	//UFUNCTION(BlueprintCallable, Category = "FSGSCpp|Attr|Initialization")
 	UFUNCTION()
-	void FSGSCppInitializationCharacterAttrubite(USGSCppV4_AbilitySystemComponent * AbilitySystemComponent) ;
+	void FSGSCppInitializationCharacterAttrubite(USGSCppV4_AbilitySystemComponent* AbilitySystemComponent, USGSCppV4_AttributeSet* SGSCppV4_AttributeSet) ;
 
 	// Implement IAbilitySystemInterface
 	USGSCppV4_AbilitySystemComponent* GetAbilitySystemComponent() ;
@@ -119,22 +122,51 @@ protected:
 	* ЛОГИКА С ТЕГАМИ
 	*/
 
-	UFUNCTION(BlueprintCallable, Category = "FSGSCpp|Abilities|Activate")
+	UFUNCTION(BlueprintCallable, Category = "FSGSCpp|Abilities|Activate", meta = (Keywords = "FSGSCppV4 Activate Abilities With Tags"))
 	bool FSGSCppActivateAbilitiesWithTags(FGameplayTagContainer AbilityTags, bool bAllowRemoteActivation = true);
 
-	UFUNCTION(BlueprintCallable, Category = "FSGSCpp|Abilities|Activate")
+	UFUNCTION(BlueprintCallable, Category = "FSGSCpp|Abilities|Activate", meta = (Keywords = "FSGSCppV4 Activate Ability With Tag"))
 	bool FSGSCppActivateAbilityWithTag(FGameplayTag AbilityTagL, bool bAllowRemoteActivation = true);
+
 	/**
 	* Abilities - Getter
 	*/
 
-	/** Returns a list of active abilities matching the specified tags. This only returns if the ability is currently running */
-	UFUNCTION(BlueprintCallable, Category = "FSGSCpp|Abilities|Gettter")
+	UFUNCTION(BlueprintCallable, Category = "FSGSCpp|Abilities|Gettter", meta = (Keywords = "FSGSCppV4 Get Active Abilities With Tags"))
 	void FSGSCppGetActiveAbilitiesWithTags(FGameplayTagContainer AbilityTags, TArray<UGameplayAbility*> &ActiveAbilities);
 	
-	/** Returns total time and remaining time for cooldown tags. Returns false if no active cooldowns found */
-	UFUNCTION(BlueprintCallable, Category = "FSGSCpp|Abilities|Gettter")
+	UFUNCTION(BlueprintCallable, Category = "FSGSCpp|Abilities|Gettter", meta = (Keywords = "FSGSCppV4 Get Cooldown Remaining For Tag"))
 	bool FSGSCppGetCooldownRemainingForTag(FGameplayTagContainer CooldownTags, float& TimeRemaining, float& CooldownDuration);
 
+	UFUNCTION(BlueprintCallable, Category = "FSGSCpp|Getter", meta = (Keywords = "FSGSCppV4 Get Character Attr"))
+	void FSGSCppV4_GetCharacterAttr(float &AttackPower, float &DefensePower, float &MoveSpeed, float &Damage);
+
+	UFUNCTION(BlueprintPure, Category = "FSGSCpp|Getter", meta = (Keywords = "FSGSCppV4 Get Health | HP"))
+	void FSGSCppV4_GetHealth(float &Health, float &HealthMax, float &Percent);
+
+	UFUNCTION(BlueprintPure, Category = "FSGSCpp|Getter", meta = (Keywords = "FSGSCppV4 Get Stamina | SP"))
+	void FSGSCppV4_GetStamina(float &Stamina, float &StaminaMax, float &Percent);
+
+	UFUNCTION(BlueprintCallable, Category = "FSGSCpp|Getter", meta = (Keywords = "FSGSCppV4 Get Mana | MP"))
+	void FSGSCppV4_Mana(float &Mana, float &ManaMax, float &Percent);
+
+	UFUNCTION(BlueprintPure, Category = "FSGSCpp|Getter", meta = (Keywords = "FSGSCppV4 Get Experience | XP"))
+	void FSGSCppV4_GetExperience(float &Experience, float &ExperienceMax, float &Percent);
+
+	UFUNCTION(BlueprintPure, Category = "FSGSCpp|Getter", meta = (Keywords = "FSGSCppV4 Get Water | "))
+	void FSGSCppV4_GetWater(float &Water, float &WaterMax, float &Percent);
+
+	UFUNCTION(BlueprintPure, Category = "FSGSCpp|Getter", meta = (Keywords = "FSGSCppV4 Get Food | "))
+	void FSGSCppV4_GetFood(float &Food, float &FoodMax, float &Percent);
+
+	UFUNCTION(BlueprintPure, Category = "FSGSCpp|Getter", meta = (Keywords = "FSGSCppV4 Get Oxygen | "))
+	void FSGSCppV4_GetOxygen(float &Oxygen, float &OxygenMax, float &Percent);
+
+	/**
+	* Данные Setter
+	*/
+
+	UFUNCTION(BlueprintCallable, Category = "FSGSCpp|Setter")
+	void FSGSCppSetHealth(float SetNewHealth);
 
 };
