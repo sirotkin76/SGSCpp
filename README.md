@@ -36,3 +36,5 @@ Choosing a parental archetype for a character
 ![image](Pic/Pic03.png)
 
 
+## Video
+[![Getting to know the plugin 1.](Pic/Intro_Part-1.png)](https://www.youtube.com/watch?v=iqQpMJzEQr8)
