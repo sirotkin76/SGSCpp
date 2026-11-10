@@ -19,6 +19,8 @@ Change your character's parent to a class from the plugin.
 
 ![image](Pic/Pic01.png)
 
+Choosing a parental archetype for a character
+
 ![image](Pic/Pic02.png)
 
 ## Step 3
