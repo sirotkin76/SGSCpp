@@ -1,5 +1,9 @@
 # Sir Gas System | SGS | SGSCpp |
 
+The SGS Template is an Unreal Engine template that utilizes the Gameplay Ability System (GAS). It is built upon the architecture of the "ActionRPG" project by Epic Games. The template provides an optimized, production-ready framework for implementing scalable and modular game abilities, leveraging data assets and the GameplayTags system.
+
+The Gameplay Ability System (GAS) in Unreal Engine is a powerful, network-ready framework designed for creating attributes, abilities, and status effects in role-playing games (RPGs), action games, and multiplayer projects.
+
 ## Documentations
 
 1. [Github - tranek](https://github.com/tranek/GASDocumentation)
