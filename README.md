@@ -16,10 +16,16 @@ Change your character's parent to a class from the plugin.
  - **SGSCppV4_Character**
  - **SGSCppV4_Pawn**
 
+
+![image](Pic/Pic01.png)
+
+![image](Pic/Pic02.png)
+
 ## Step 3
   a. Create a data asset containing character attributes ("**SGSCppV4_DataAsset_Attr_Character_Init**"). In this data asset, you should specify the gameplay abilities and gameplay effects to be used for initialization.
   b.  After you changed the character's parent, a new component "**SGSCppV4_Component_Character_Init**" appeared in it. Add a Data Asset containing data to the component's "**SGSCppV4_DataAssetInit**" variable.
 
+![image](Pic/Pic03.png)
 
 News about changes
 [Boosty](https://boosty.to/unrealengine4/posts/2064b642-314c-4298-a81e-effe133103de)
