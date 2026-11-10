@@ -6,7 +6,8 @@
 2. [epicgames.com](https://dev.epicgames.com/documentation/unreal-engine/gameplay-ability-system-for-unreal-engine?lang=ru)
 3. [ActionRPG](https://www.fab.com/listings/ef04a196-03c1-4204-998a-c7d5264fade7) 
 4. [ActionRPG on Unreal engine 5](https://github.com/sirotkin76/ActionRPG_UnrealEngine5)
-5. [Documentation for working with custom graphs]([https://github.com/sirotkin76/ActionRPG_UnrealEngine5](https://github.com/sirotkin76/SirCppCustomGraphAssetEditor)) 
+5. [Documentation for working with custom graphs](https://github.com/sirotkin76/SirCppCustomGraphAssetEditor)
+6. [News about changes on Boosty](https://boosty.to/unrealengine4/posts/2064b642-314c-4298-a81e-effe133103de)
 
 ## Step 1
 Copy the plugin folder into your project. This is necessary to ensure that your project does not break when the plugin is updated.
@@ -30,6 +31,4 @@ Choosing a parental archetype for a character
 
 ![image](Pic/Pic03.png)
 
-News about changes
-[Boosty](https://boosty.to/unrealengine4/posts/2064b642-314c-4298-a81e-effe133103de)
 
