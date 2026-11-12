@@ -10,22 +10,42 @@
 #include "SGSCppV4_BFL.generated.h"
 
 class USGSCppV4_Component_Storage;
+class USGSCppV4_AbilitySystemComponent;
+class USGSCppV4_DataAsset_Attr;
+class USGSCppSirInvSysV4;
 
 /**
  * 
  */
-UCLASS(Blueprintable, Category = "SGSCpp|BFL")
+UCLASS(Blueprintable, Category = "FSGSCpp|BFL")
 class SIRGASSYSTEMRUNTIME_API USGSCppV4_BFL : public UBlueprintFunctionLibrary
 {
 	GENERATED_BODY()
 		
 public:
-	
-	UFUNCTION(BlueprintCallable, Category="SGSCpp|BFLInvSysV4")
-	static void SGSCppBFLInvSysSlotsSetV4(USGSCppV4_Component_Storage * Owner, TArray<FSGSCppV4InvSlot> ArrNewInvSlots);
+					
+	UFUNCTION(BlueprintCallable, Category = "FSGSCpp|BFL|Storage", meta = (WorldContext = "WorldContextObject")) /*, meta = (Keywords = "BFL Storage - Get slot | skill - Activate (By or USE) Id")*/
+	static void FSGSCppV4_BFL_Storage_GetSlot_UseId(USGSCppV4_Component_Storage * Storage, int32 Get_Id, bool &IsValid, FSGSCppV4Slot &Slot);
 
-	UFUNCTION(BlueprintCallable, Category="SGSCpp|Base")
-	static ESGSSirDirectionMovement SGSCppBFLGetDirectionMovementV4(float ForwardL, float RightL);
+	
+	UFUNCTION(BlueprintCallable, Category="FSGSCpp|BFL|Storage", meta = (WorldContext = "WorldContextObject"))
+	static void FSGSCpp_BFL_Player_Skill_ActivateById(const UObject* WorldContextObject, int32 idSkill, bool &SkillIsValid, int32 &SkillLevel,  USGSCppV4_DataAsset_Attr_Skill*& SKill );
+
+	UFUNCTION(BlueprintCallable, Category="FSGSCpp|BFL|GAS", meta = (WorldContext = "WorldContextObject"))
+	static USGSCppV4_AbilitySystemComponent* FSGSCpp_BFL_Player_AbilitySystemComponent_Get(const UObject* WorldContextObject, int32 PlayerIndex = 0);
+
+	UFUNCTION(BlueprintCallable, Category="FSGSCpp|BFL|GAS", meta = (DefaultToSelf = "Caller"))
+	static bool FSGSCpp_BFL_Tag_Activate(USGSCppV4_AbilitySystemComponent* USGSCppV4_AbilitySystemComponent, FGameplayTag AbilityTag);
+
+	UFUNCTION(BlueprintCallable, Category="FSGSCpp|BFL|GAS", meta = (DefaultToSelf = "Caller"))
+	static void FSGSCpp_BFL_Tag_Cancel(UObject* Caller, FGameplayTag AbilityTag);
+
+
+	UFUNCTION(BlueprintCallable, Category="FSGSCpp|BFL|Inventory")
+	static void FSGSCppV4_BFL_Storage_Slots_Set(USGSCppV4_Component_Storage * Owner, TArray<FSGSCppV4Slot> ArrNewInvSlots);
+
+	UFUNCTION(BlueprintCallable, Category="FSGSCpp|BFL|Base")
+	static ESGSSirDirectionMovement FSGSCppBFLGetDirectionMovementV4(float ForwardL, float RightL);
 
 	/*
 	UFUNCTION(BlueprintCallable, Category="SGSCpp|BFLInvSysV4|Slot")

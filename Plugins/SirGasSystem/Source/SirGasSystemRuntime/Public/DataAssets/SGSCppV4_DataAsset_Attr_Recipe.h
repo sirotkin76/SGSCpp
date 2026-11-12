@@ -8,7 +8,7 @@
 
 #include "SGSCppV4_DataAsset_Attr_Recipe.generated.h"
 
-class USGSCppV4_DataAsset_Attr_InventorySlot;
+class USGSCppV4_DataAsset_Attr_Slot;
 /**
  * 
  */

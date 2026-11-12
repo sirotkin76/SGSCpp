@@ -17,8 +17,10 @@ ASGSCppV4_Pawn::ASGSCppV4_Pawn()
 	// Create the attribute set, this replicates by default
 	AttributeSet = CreateDefaultSubobject<USGSCppV4_AttributeSet>(TEXT("SGSCppV4_AttributeSet"));
 
-	SGSCppV4_Component_Character_Init = CreateDefaultSubobject<USGSCppV4_Component_Character_Init>(TEXT("SGSCppV4_Component_Character_Init"));
-	SGSCppV4_Component_Character_Init->SetIsReplicated(false);
+	/*
+	SGSCppV4_Component_MasterLogic = CreateDefaultSubobject<USGSCppV4_Component_MasterLogic>(TEXT("SGSCppV4_Component_MasterLogic"));
+	SGSCppV4_Component_MasterLogic->SetIsReplicated(false);
+	*/
 
 }
 
@@ -32,7 +34,7 @@ void ASGSCppV4_Pawn::BeginPlay()
 {
 	Super::BeginPlay();
 	
-	SGSCppV4_Component_Character_Init->FSGSCppInitializationCharacterAttrubite(AbilitySystemComponent, AttributeSet);
+	//SGSCppV4_Component_MasterLogic->FSGSCppInitializationCharacterAttrubite(AbilitySystemComponent, AttributeSet);
 
 	//GEngine->AddOnScreenDebugMessage(-1, 50.f, FColor::Blue, TEXT("BeginPlay")); // print string
 	
@@ -111,15 +113,14 @@ void ASGSCppV4_Pawn::SetupPlayerInputComponent(UInputComponent* PlayerInputCompo
 	Super::SetupPlayerInputComponent(PlayerInputComponent);
 }
 
-USGSCppV4_Component_Character_Init* ASGSCppV4_Pawn::SGSCppV4_Bfl_GetGameplayAbility_Implementation() const
+USGSCppV4_AttributeSet* ASGSCppV4_Pawn::FSGSCppV4_Interface_AttributeSet_Get_Implementation() const
 {
-	if (IsValid(SGSCppV4_Component_Character_Init))	return SGSCppV4_Component_Character_Init;
-	return nullptr;
+	return AttributeSet;
 }
 
 int32 ASGSCppV4_Pawn::FSGSCppGetCharacterLevel() const
 {
-	return SGSCppV4_Component_Character_Init->CharacterLevel;
+	return 1;
 }
 
 float ASGSCppV4_Pawn::FSGSCppGetMoveSpeed() const

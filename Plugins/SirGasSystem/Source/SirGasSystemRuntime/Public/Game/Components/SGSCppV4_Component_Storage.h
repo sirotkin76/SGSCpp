@@ -9,7 +9,7 @@
 #include "SGSCppV4_Component_Storage.generated.h"
 
 class USGSCppV4_DataAsset_Attr;
-class USGSCppV4_DataAsset_Attr_InventorySlot;
+class USGSCppV4_DataAsset_Attr_Slot;
 
 
 UCLASS(MinimalAPI, ClassGroup=("FSGSCpp|InventarySystem"), meta=(BlueprintSpawnableComponent), Blueprintable, BlueprintType, meta = (ShowWorldContextPin)  )
@@ -23,7 +23,7 @@ public:
 
 	//UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "FSGSCpp|InventarySystem|Variables")
 	UPROPERTY()
-	TArray<FSGSCppV4InvSlot> FSGSInvSysSlots;
+	TArray<FSGSCppV4Slot> FSGSInvSysSlots;
 
 	UPROPERTY()
 	int32 MaxSlots;
@@ -36,17 +36,11 @@ public:
 	// Called every frame
 	virtual void TickComponent(float DeltaTime, ELevelTick TickType, FActorComponentTickFunction* ThisTickFunction) override;
 
-	UFUNCTION(BlueprintCallable, BlueprintPure, Category = "FSGSCpp|InventarySystem|Functions", meta = (DisplayName = "SGS InvSys Slots Get V4"))
-	TArray<FSGSCppV4InvSlot> SGSInvSys_SlotsGet();
+	UFUNCTION(BlueprintCallable, BlueprintPure, Category = "FSGSCpp|Storage|Functions", meta = (DisplayName = "SGS InvSys Slots Get V4"))
+	TArray<FSGSCppV4Slot> FSGSCpp_Slots_Get();
 		
-	UFUNCTION(BlueprintCallable, Category = "FSGSCpp|InventarySystem|Functions", meta = (DisplayName = "SGS InvSys Slots Set V4"))
-	void SGSInvSys_SlotsSet(TArray<FSGSCppV4InvSlot> NewItems);
-		
-	UFUNCTION(BlueprintCallable, Category = "FSGSCpp|InventarySystem|Functions", meta = (DisplayName = "SGS InvSys Slots Max Set V4"))
-	void SGSInvSys_SetMaxSlots(int32 SetNewMaxSlot);
-	
-	UFUNCTION(BlueprintCallable, BlueprintPure, Category = "FSGSCpp|InventarySystem|Functions", meta = (DisplayName = "SGS InvSys Slots Max Get V4"))
-	int32 SGSInvSys_GetMaxSlots();
+	UFUNCTION(BlueprintCallable, Category = "FSGSCpp|Storage|Functions", meta = (DisplayName = "SGS InvSys Slots Set V4"))
+	void FSGSCpp_Slots_Set(TArray<FSGSCppV4Slot> NewItems);
 
 	UFUNCTION(BlueprintImplementableEvent, BlueprintCallable, Category = "FSGSCpp|InventarySystem|Events")
 	void EvUpdateLevel(int32 SetNewLevel);

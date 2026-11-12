@@ -3,17 +3,21 @@
 
 #include "Data/SGSCppV4_BFL.h"
 
+#include "AbilitySystemBlueprintLibrary.h"
+#include "Abilities/SGSCppV4_AbilitySystemComponent.h"
+#include "Kismet/GameplayStatics.h"
 #include "Data/SGSCppV4_Enumerations.h"
+#include "GameFramework/Actor.h"
 #include "Game/Components/SGSCppV4_Component_Storage.h"
 
 
-void USGSCppV4_BFL::SGSCppBFLInvSysSlotsSetV4(USGSCppV4_Component_Storage * Owner,
-                                              TArray<FSGSCppV4InvSlot> ArrNewInvSlots)
+void USGSCppV4_BFL:: FSGSCppV4_BFL_Storage_Slots_Set(USGSCppV4_Component_Storage * Owner,
+                                              TArray<FSGSCppV4Slot> ArrNewInvSlots)
 {
-	Owner->SGSInvSys_SlotsSet(ArrNewInvSlots);
+	Owner->FSGSCpp_Slots_Set(ArrNewInvSlots);
 }
 
-ESGSSirDirectionMovement USGSCppV4_BFL::SGSCppBFLGetDirectionMovementV4(float ForwardL, float RightL)
+ESGSSirDirectionMovement USGSCppV4_BFL::FSGSCppBFLGetDirectionMovementV4(float ForwardL, float RightL)
 {
 	if (ForwardL == -1.f && RightL == 0.f) return ESGSSirDirectionMovement::Back_None;
 	if (ForwardL == -1.f && RightL == 1.f) return ESGSSirDirectionMovement::Back_Right;
@@ -27,6 +31,118 @@ ESGSSirDirectionMovement USGSCppV4_BFL::SGSCppBFLGetDirectionMovementV4(float Fo
 
 	return ESGSSirDirectionMovement::Forward_None;
 }
+
+void USGSCppV4_BFL::FSGSCpp_BFL_Player_Skill_ActivateById(const UObject* WorldContextObject, int32 idSkill, bool &SkillIsValid, int32 &SkillLevel,  USGSCppV4_DataAsset_Attr_Skill*& SKill)
+{
+	USGSCppV4_AbilitySystemComponent*  local = FSGSCpp_BFL_Player_AbilitySystemComponent_Get(WorldContextObject, 1);
+
+	//if (IsValid(local)) return local->FSGSCppV4_BFL_Player_Skill_ActivateById(idSkill , SkillIsValid , SkillLevel , SKill);
+
+	SkillIsValid = false;
+	SkillLevel = 0;
+	SKill = nullptr;
+	return;
+}
+
+USGSCppV4_AbilitySystemComponent* USGSCppV4_BFL::FSGSCpp_BFL_Player_AbilitySystemComponent_Get(
+	const UObject* WorldContextObject, int32 PlayerIndex)
+{
+	// Получаем базовый APawn через GameplayStatics
+	APawn* BasePawn = UGameplayStatics::GetPlayerPawn(WorldContextObject, PlayerIndex);
+	if (!BasePawn)
+	{
+		return nullptr;
+	}
+	
+	USGSCppV4_AbilitySystemComponent* local = Cast<USGSCppV4_AbilitySystemComponent>(UAbilitySystemBlueprintLibrary::GetAbilitySystemComponent(BasePawn));
+	
+	if (IsValid(local)) return local;
+
+	return nullptr;
+
+}
+
+bool USGSCppV4_BFL::FSGSCpp_BFL_Tag_Activate(USGSCppV4_AbilitySystemComponent* USGSCppV4_AbilitySystemComponent, FGameplayTag AbilityTag)
+{
+	if (!IsValid(USGSCppV4_AbilitySystemComponent)) return false;
+	
+	if (AbilityTag == FGameplayTag::EmptyTag) return false;
+
+	return USGSCppV4_AbilitySystemComponent->FSGSCppV4_Ability_Tag_Activate(AbilityTag, true);
+}
+
+void USGSCppV4_BFL::FSGSCpp_BFL_Tag_Cancel(UObject* Caller, FGameplayTag AbilityTag)
+{
+	if (!Caller) return ;
+	
+	USGSCppV4_AbilitySystemComponent* local = Cast<AActor>(Caller)->FindComponentByClass<USGSCppV4_AbilitySystemComponent>();
+
+	if (!IsValid(local)) return;
+
+	return local->FSGSCppV4_Ability_Tag_Cancel(AbilityTag);
+}
+
+
+void USGSCppV4_BFL::FSGSCppV4_BFL_Storage_GetSlot_UseId(USGSCppV4_Component_Storage * Storage, int32 Get_Id, bool &IsValid, FSGSCppV4Slot &Slot)
+{
+	if (!Storage) return ;
+	
+	TArray<FSGSCppV4Slot> SlotsL = Storage->FSGSCpp_Slots_Get();
+
+	if ((SlotsL.Num()-1) < Get_Id)
+	{
+		IsValid = false;
+		return ;
+	}
+	
+	
+	IsValid = true;
+	Slot = SlotsL[Get_Id];
+	
+	return ;
+	
+	
+}
+
+/*
+void USGSCppV4_AbilitySystemComponent::FSGSCppV4_BFL_Player_Skill_ActivateById(int32 idSkill, bool &SkillIsValid, int32 &SkillLevel,  USGSCppV4_DataAsset_Attr_Skill*& SKill)
+{
+	int32 NumL = AbilitiesForUpdate.Num();
+	
+	if (idSkill > (NumL-1) )
+	{
+		SkillIsValid = false;
+		SkillLevel = 0;
+		SKill = nullptr;
+		
+		return;
+	}
+	
+	SkillIsValid = true;
+	SkillLevel = AbilitiesForUpdate[idSkill].AbiltyLevel;
+	SKill = AbilitiesForUpdate[idSkill].SGSCppV4_DataAsset_Attr_Ability;
+
+	return;
+}
+*/
+
+
+
+/*
+bool USGSCppV4_BFL::SGSCpp_BFL_Tag_Activate(FGameplayTag AbilityTag)
+{
+	
+	ISGSCppV4_Interface_GameplayAbility().SSGSCppV4_Interface_GetGameplayAbility()->FSGSCppActivateAbilityWithTag(AbilityTag, true);
+	return false;
+}
+*/
+
+/*
+void USGSCppV4_BFL::SGSCpp_BFL_Tag_Cancel(FGameplayTag AbilityTag)
+{
+	ISGSCppV4_Interface_GameplayAbility::ISGSCppV4_Interface_GameplayAbility().SSGSCppV4_Interface_GetGameplayAbility()->FSGSCppCancelAbility(AbilityTag);
+}
+*/
 
 /*
 void USGSCppSirInvSysBFLV4::SGSCppBFLInvSysSlotCheckNameV4(USGSCppSirInvSysV4* Owner, FName FindName,

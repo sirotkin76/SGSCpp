@@ -10,7 +10,8 @@
 
 
 USGSCppV4_AttributeSet::USGSCppV4_AttributeSet()
-	: Health(1.f)
+	: Level(1.f)
+	, Health(1.f)
 	, MaxHealth(1.f)
 	, Mana(0.f)
 	, MaxMana(0.f)
@@ -40,23 +41,52 @@ void USGSCppV4_AttributeSet::PreAttributeChange(const FGameplayAttribute& Attrib
 	{
 		AdjustAttributeForMaxChange(Stamina, MaxStamina, NewValue, GetStaminaAttribute());
 	}
+	else if (Attribute == GetWaterAttribute())
+	{
+		AdjustAttributeForMaxChange(Water, MaxWater, NewValue, GetWaterAttribute());
+	}
+	else if (Attribute == GetFoodAttribute())
+	{
+		AdjustAttributeForMaxChange(Food, MaxFood, NewValue, GetFoodAttribute());
+	}
+	else if (Attribute == GetOxygenAttribute())
+	{
+		AdjustAttributeForMaxChange(Oxygen, MaxOxygen, NewValue, GetOxygenAttribute());
+	}
 }
 
 void USGSCppV4_AttributeSet::GetLifetimeReplicatedProps(TArray<FLifetimeProperty>& OutLifetimeProps) const
 {
 	Super::GetLifetimeReplicatedProps(OutLifetimeProps);
 
+	DOREPLIFETIME(USGSCppV4_AttributeSet, Level);
+	
 	DOREPLIFETIME(USGSCppV4_AttributeSet, Health);
 	DOREPLIFETIME(USGSCppV4_AttributeSet, MaxHealth);
+	
 	DOREPLIFETIME(USGSCppV4_AttributeSet, Mana);
 	DOREPLIFETIME(USGSCppV4_AttributeSet, MaxMana);
+	
 	DOREPLIFETIME(USGSCppV4_AttributeSet, Stamina);
 	DOREPLIFETIME(USGSCppV4_AttributeSet, MaxStamina);
+	
 	DOREPLIFETIME(USGSCppV4_AttributeSet, AttackPower);
 	DOREPLIFETIME(USGSCppV4_AttributeSet, DefensePower);
 	DOREPLIFETIME(USGSCppV4_AttributeSet, MoveSpeed);
+	
 	DOREPLIFETIME(USGSCppV4_AttributeSet, ExperienceCur);
 	DOREPLIFETIME(USGSCppV4_AttributeSet, ExperienceMax);
+	
+	DOREPLIFETIME(USGSCppV4_AttributeSet, Water);
+	DOREPLIFETIME(USGSCppV4_AttributeSet, MaxWater);
+	
+	DOREPLIFETIME(USGSCppV4_AttributeSet, Food);
+	DOREPLIFETIME(USGSCppV4_AttributeSet, MaxFood);
+	
+	DOREPLIFETIME(USGSCppV4_AttributeSet, Oxygen);
+	DOREPLIFETIME(USGSCppV4_AttributeSet, MaxOxygen);
+
+	
 }
 
 void USGSCppV4_AttributeSet::SetHpAndMaxHp(float NewHpCurLocal, float NewHpMaxLocal)
@@ -86,6 +116,11 @@ void USGSCppV4_AttributeSet::AdjustAttributeForMaxChange(
 
 		AbilityComp->ApplyModToAttributeUnsafe(AffectedAttributeProperty, EGameplayModOp::Additive, NewDelta);
 	}
+}
+
+void USGSCppV4_AttributeSet::OnRep_Level(const FGameplayAttributeData& OldValue)
+{
+	GAMEPLAYATTRIBUTE_REPNOTIFY(USGSCppV4_AttributeSet, Level, OldValue);
 }
 
 void USGSCppV4_AttributeSet::OnRep_Health(const FGameplayAttributeData& OldValue)
@@ -173,6 +208,49 @@ void USGSCppV4_AttributeSet::OnRep_MaxOxygen(const FGameplayAttributeData& OldVa
 	GAMEPLAYATTRIBUTE_REPNOTIFY(USGSCppV4_AttributeSet, MaxOxygen, OldValue);
 }
 
+void USGSCppV4_AttributeSet::ExperienceCalculateLogic(float ExpNew)
+{
+	float ExpLocal = ExpNew + GetExperienceCur();
+	
+	if ( ExpLocal < ExperienceMax.GetBaseValue() )
+	{
+		// Clamp 
+		SetExperienceCur(FMath::Clamp(ExpLocal, 0.0f, GetExperienceMax()));
+		return;
+	}
+	else
+	{
+		float RemainderL = ExpLocal - ExperienceMax.GetBaseValue();
+		
+		SetLevel(GetLevel() + 1);
+
+		ISGSCppV4_Interface_GameplayAbility::Execute_FSGSCppV4_Interface_Player_NewLevel(GetOwningActor());
+			
+		USGSCppV4_AbilitySystemComponent* local = Cast<USGSCppV4_AbilitySystemComponent>(UAbilitySystemBlueprintLibrary::GetAbilitySystemComponent(GetOwningActor()));
+		local->FSGSCppV4_Effects_Update();
+
+		if (RemainderL == 0.0f)
+		{
+			SetExperienceCur(0.0f);
+		}
+		else		
+		if (RemainderL > 0.0f)
+		{
+			SetExperienceCur(0.0f);
+			ExperienceCalculateLogic(RemainderL);
+		}
+	}
+
+	/*
+	if (TargetCharacter)
+	{
+		// Call for all mana changes
+		TargetCharacter->HandleOxygenChanged(DeltaValue, SourceTags);
+	}
+	*/
+
+}
+
 void USGSCppV4_AttributeSet::PostGameplayEffectExecute(const FGameplayEffectModCallbackData& Data)
 {
 	Super::PostGameplayEffectExecute(Data);
@@ -199,6 +277,7 @@ void USGSCppV4_AttributeSet::PostGameplayEffectExecute(const FGameplayEffectModC
 		TargetActor = Data.Target.AbilityActorInfo->AvatarActor.Get();
 		TargetController = Data.Target.AbilityActorInfo->PlayerController.Get();
 		TargetCharacter = Cast<ASGSCppV4_Character>(TargetActor);
+		
 	}
 
 	if (Data.EvaluatedData.Attribute == GetDamageAttribute())
@@ -260,9 +339,10 @@ void USGSCppV4_AttributeSet::PostGameplayEffectExecute(const FGameplayEffectModC
 			{
 				// This is proper damage
 				TargetCharacter->HandleDamage(LocalDamageDone, HitResult, SourceTags, SourceCharacter, SourceActor);
-
 				// Call for all health changes
 				TargetCharacter->HandleHealthChanged(-LocalDamageDone, SourceTags);
+				
+				TargetCharacter->FSGSCppOnDamaged(LocalDamageDone, HitResult, SourceTags, SourceCharacter, SourceActor);	
 			}
 		}
 	}
@@ -276,6 +356,7 @@ void USGSCppV4_AttributeSet::PostGameplayEffectExecute(const FGameplayEffectModC
 		{
 			// Call for all health changes
 			TargetCharacter->HandleHealthChanged(DeltaValue, SourceTags);
+			//TargetCharacter->FSGSCppOnDamaged(LocalDamageDone, HitResult, SourceTags, SourceCharacter, SourceActor);	
 		}
 	}
 	else if (Data.EvaluatedData.Attribute == GetManaAttribute())
@@ -340,5 +421,9 @@ void USGSCppV4_AttributeSet::PostGameplayEffectExecute(const FGameplayEffectModC
 			// Call for all mana changes
 			TargetCharacter->HandleOxygenChanged(DeltaValue, SourceTags);
 		}
+	}
+	else if (Data.EvaluatedData.Attribute == GetExperienceCurAttribute())
+	{
+		ExperienceCalculateLogic(DeltaValue);
 	}
 }

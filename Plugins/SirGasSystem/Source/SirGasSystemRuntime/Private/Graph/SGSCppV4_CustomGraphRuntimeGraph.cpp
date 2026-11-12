@@ -3,7 +3,7 @@
 #include "Graph/SGSCppV4_CustomGraphRuntimeGraph.h"
 
 #include "Data/SGSCppV4_GraphRuntimeStuctures.h"
-#include "Nodes/USGSCppV4_CustomGraphRuntimeInfoNodeEnd.h"
+#include "Nodes/SGSCppV4_CustomGraphRuntimeInfoNodeEnd.h"
 
 #include "Nodes/SGSCppV4_GraphNodeInfoContinue.h"
 #include "Nodes/SGSCppV4_GraphNodeInfoContinueCD.h"

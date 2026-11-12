@@ -7,6 +7,7 @@
 #include "Net/UnrealNetwork.h"
 #include "GameplayEffectTypes.h"
 #include "Abilities/GameplayAbilityTargetTypes.h"
+#include "Components/Widget.h"
 
 #include "SGSCppV4_Struct.generated.h"
 
@@ -14,10 +15,26 @@
 struct FGameplayEffectSpecHandle;
 
 class USGSCppV4_TargetType;
-class USGSCppV4_DataAsset_Attr_InventorySlot;
+class USGSCppV4_DataAsset_Attr_Slot;
 class URPGAbilitySystemComponent;
 class UGameplayEffect;
 class URPGTargetType;
+class USGSCppV4_DataAsset_Attr_Skill;
+
+
+USTRUCT(BlueprintType)
+struct FSGSCppV4_Ability_Update
+{
+	GENERATED_BODY()
+
+public:
+	
+	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category="SGSCpp|AbilityUpdate")
+	USGSCppV4_DataAsset_Attr_Skill * SGSCppV4_DataAsset_Attr_Ability;
+
+	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category="SGSCpp|AbilityUpdate")
+	int32 AbiltyLevel = 1;
+};
 
 
 USTRUCT(BlueprintType)
@@ -28,7 +45,7 @@ struct FSGSCppV4_SlotCount
 public:
 	
 	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category="SGSCppGraph|FSGSCppV4_SlotCount")
-	USGSCppV4_DataAsset_Attr_InventorySlot * SGSCppV4_InvSlot_DataAsset;
+	USGSCppV4_DataAsset_Attr_Slot * SGSCppV4_InvSlot_DataAsset;
 	
 	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category="SGSCppGraph|FSGSCppV4_SlotCount")
 	int32 Count = 1;
@@ -36,29 +53,32 @@ public:
 
 
 USTRUCT(BlueprintType)
-struct FSGSCppV4InvSlot
+struct FSGSCppV4Slot
 {
 	GENERATED_BODY()
 
 public:
 	
 	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "FSGSCpp|InventarySystem")
-	UPrimaryDataAsset * SGSCppV4_InvSlot_DataAsset;
+	UPrimaryDataAsset * PrimaryDataAsset;
 
 	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category="FSGSCpp|InventarySystem|Navigation")
-	int32 SlotIndex = -1;
+	int32 Index = -1;
+	
+	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category="FSGSCpp|InventarySystem|Navigation")
+	int32 Level = -1;
+	
+	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category="FSGSCpp|InventarySystem|Navigation")
+	FName Name;
 	
 	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category="FSGSCpp|InventarySystem", meta = (ClampMin=1, Min=1))
-	int32 SlotCount = -1;
+	int32 Count = -1;
 	
 	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category="FSGSCpp|InventarySystem")
-	float SlotCondition = -1;
+	float Condition = -1;
 	
 	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category="FSGSCpp|InventarySystem|Navigation")
-	FName SlotName;
-
-	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category="FSGSCpp|InventarySystem|Navigation")
-	FVector LocationForSpawn;
+	FVector Location;
 };
 
 

@@ -10,7 +10,6 @@
 #include "AbilitySystemInterface.h"
 #include "Abilities/SGSCppV4_AttributeSet.h"
 #include "Abilities/SGSCppV4_AbilitySystemComponent.h"
-#include "Components/SGSCppV4_Component_Character_Init.h"
 #include "Data/SGSCppV4_Interface_GameplayAbility.h"
 
 #include "SGSCppV4_Pawn.generated.h"
@@ -30,9 +29,6 @@ protected:
 	UPROPERTY()
 	USGSCppV4_AttributeSet* AttributeSet;
 
-	UPROPERTY(EditAnywhere, BlueprintReadOnly, Category = "FSGSCpp")
-	USGSCppV4_Component_Character_Init* SGSCppV4_Component_Character_Init;
-	
 	
 public:
 	
@@ -59,7 +55,7 @@ public:
 	virtual void SetupPlayerInputComponent(class UInputComponent* PlayerInputComponent) override;
 
 	//UFUNCTION(BlueprintNativeEvent, BlueprintCallable, Category = "SGSCppV4|InterfaceFunction")
-	USGSCppV4_Component_Character_Init* SGSCppV4_Bfl_GetGameplayAbility_Implementation() const;
+	USGSCppV4_AttributeSet* FSGSCppV4_Interface_AttributeSet_Get_Implementation() const;
 
 	/**
 	 * Called when character takes damage, which may have killed them

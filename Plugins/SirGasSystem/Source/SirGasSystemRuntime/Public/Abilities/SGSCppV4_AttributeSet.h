@@ -33,6 +33,11 @@ public:
 	virtual void GetLifetimeReplicatedProps(TArray<FLifetimeProperty>& OutLifetimeProps) const override;
 
 	/** Current Health, when 0 we expect owner to die. Capped by MaxHealth */
+	UPROPERTY(BlueprintReadOnly, Category = "Level", ReplicatedUsing=OnRep_Level)
+	FGameplayAttributeData Level;
+	ATTRIBUTE_ACCESSORS(USGSCppV4_AttributeSet, Level)
+
+	/** Current Health, when 0 we expect owner to die. Capped by MaxHealth */
 	UPROPERTY(BlueprintReadOnly, Category = "Health", ReplicatedUsing=OnRep_Health)
 	FGameplayAttributeData Health;
 	ATTRIBUTE_ACCESSORS(USGSCppV4_AttributeSet, Health)
@@ -127,7 +132,10 @@ protected:
 	/** Helper function to proportionally adjust the value of an attribute when it's associated max attribute changes. (i.e. When MaxHealth increases, Health increases by an amount that maintains the same percentage as before) */
 	void AdjustAttributeForMaxChange(FGameplayAttributeData& AffectedAttribute, const FGameplayAttributeData& MaxAttribute, float NewMaxValue, const FGameplayAttribute& AffectedAttributeProperty);
 
-	// These OnRep functions exist to make sure that the ability system internal representations are synchronized properly during replication
+	UFUNCTION()
+	virtual void OnRep_Level(const FGameplayAttributeData& OldValue);
+	
+	// These OnRep functions exist to make sure that the ability system internal representations are synchronized properly during replication 
 	UFUNCTION()
 	virtual void OnRep_Health(const FGameplayAttributeData& OldValue);
 
@@ -178,5 +186,7 @@ protected:
 
 	UFUNCTION()
 	virtual void OnRep_MaxOxygen(const FGameplayAttributeData& OldValue);
-
+	
+	UFUNCTION()
+	void ExperienceCalculateLogic(float ExpNew);
 };

@@ -3,7 +3,7 @@
 #pragma once
 
 #include "EdGraph/EdGraphNode.h"
-#include "Nodes/USGSCppV4_CustomGraphRuntimeInfoNodeEnd.h"
+#include "Nodes/SGSCppV4_CustomGraphRuntimeInfoNodeEnd.h"
 #include "SGSCppCustomGraphAssetEditorNode.h"
 #include "SGSCppCustomGraphAssetEditorNodeEnd.generated.h"
 

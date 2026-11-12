@@ -16,14 +16,25 @@
 
 class UGameplayAbility;
 class UGameplayEffect;
-class USGSCppV4_Component_Character_Init;
 
 UCLASS()
-class SIRGASSYSTEMRUNTIME_API ASGSCppV4_Character : public ACharacter, public IAbilitySystemInterface, public IGenericTeamAgentInterface, public ISGSCppV4_Interface_GameplayAbility
+class SIRGASSYSTEMRUNTIME_API ASGSCppV4_Character : public ACharacter, public IGenericTeamAgentInterface, public ISGSCppV4_Interface_GameplayAbility
 {
 	GENERATED_BODY()
 
 public:
+	/** The component used to handle ability system interactions */
+	
+	//UPROPERTY(VisibleAnywhere, BlueprintReadOnly, Category = "FSGSCpp", meta = (AllowPrivateAccess = "true"))
+	
+	/*
+	UPROPERTY()
+	USGSCppV4_AbilitySystemComponent* AbilitySystemComponent;
+	*/
+
+	/** List of attributes modified by the ability system */
+	UPROPERTY()
+	USGSCppV4_AttributeSet* AttributeSet;
 
 	// Sets default values for this character's properties
 	ASGSCppV4_Character();
@@ -37,16 +48,15 @@ public:
 	virtual void GetLifetimeReplicatedProps(TArray<FLifetimeProperty>& OutLifetimeProps) const override;
 
 	// Implement IAbilitySystemInterface
-	UAbilitySystemComponent* GetAbilitySystemComponent() const override;
+	//UAbilitySystemComponent* GetAbilitySystemComponent() const override;
 
-	UPROPERTY(EditAnywhere, BlueprintReadOnly, Category = "FSGSCpp")
-	USGSCppV4_Component_Character_Init* SGSCppV4_Component_Character_Init;
-
+	/*
 	UFUNCTION(BlueprintPure, Category = "FSGSCpp|Getter")
 	USGSCppV4_AbilitySystemComponent* GetSGSCppAbilitySystemComponent();
+	*/
 	
 	//UFUNCTION(BlueprintNativeEvent, BlueprintCallable, Category = "SGSCppV4|InterfaceFunction")
-	USGSCppV4_Component_Character_Init* SGSCppV4_Bfl_GetGameplayAbility_Implementation() const;
+	USGSCppV4_AttributeSet* FSGSCppV4_Interface_AttributeSet_Get_Implementation() const;
 
 	// Called every frame
 	virtual void Tick(float DeltaTime) override;
@@ -119,13 +129,6 @@ public:
 	
 
 protected:
-	/** The component used to handle ability system interactions */
-	UPROPERTY()
-	USGSCppV4_AbilitySystemComponent* AbilitySystemComponent;
-
-	/** List of attributes modified by the ability system */
-	UPROPERTY()
-	USGSCppV4_AttributeSet* AttributeSet;
 
 	// Called from RPGAttributeSet, these call BP events above
 	virtual void HandleDamage(float DamageAmount, const FHitResult& HitInfo, const struct FGameplayTagContainer& DamageTags, ASGSCppV4_Character* InstigatorCharacter, AActor* DamageCauser);

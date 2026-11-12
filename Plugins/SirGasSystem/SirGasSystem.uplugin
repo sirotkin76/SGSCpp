@@ -1,19 +1,20 @@
 {
 	"FileVersion": 3,
 	"Version": 1,
-	"VersionName": "4.0",
-	"FriendlyName": "SGS | Cpp | SirGasSystem | Gas",
-	"Description": "",
-	"Category": "Other",
+	"VersionName": "4.1",
+	"FriendlyName": "SGS | SGSCpp | Sir Gas System | Gas",
+	"Description": "The plugin simplifies the creation of mechanics and speeds up game development.",
+	"Category": "Gameplay Features",
 	"CreatedBy": "SirotkinAleksandr",
 	"CreatedByURL": "https://www.linkedin.com/in/alexandr-sirotkin-76r/",
 	"DocsURL": "https://github.com/sirotkin76/SGSCpp",
 	"MarketplaceURL": "",
 	"SupportURL": "https://discord.gg/DVFQtGXHyA",
-	"CanContainContent": true,
+	"EngineVersion": "5.8.0",
+	"CanContainContent": false,
 	"IsBetaVersion": true,
 	"IsExperimentalVersion": true,
-	"Installed": false,
+	"Installed": true,
 	"SupportedTargetPlatforms": [
 		"Win64"
 	],
@@ -23,7 +24,11 @@
 			"Type": "Editor",
 			"LoadingPhase": "Default",
 			"PlatformAllowList": [
-				"Win64"
+				"Win64",
+				"Mac",
+				"Linux",
+				"IOS",
+				"Android"
 			]
 		},
 		{
@@ -31,7 +36,11 @@
 			"Type": "Runtime",
 			"LoadingPhase": "Default",
 			"PlatformAllowList": [
-				"Win64"
+				"Win64",
+				"Mac",
+				"Linux",
+				"IOS",
+				"Android"
 			]
 		}
 	],
