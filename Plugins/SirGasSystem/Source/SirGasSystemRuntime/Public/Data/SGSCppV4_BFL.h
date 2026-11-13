@@ -12,7 +12,7 @@
 class USGSCppV4_Component_Storage;
 class USGSCppV4_AbilitySystemComponent;
 class USGSCppV4_DataAsset_Attr;
-class USGSCppSirInvSysV4;
+class USGSCppSirV4;
 
 /**
  * 
@@ -48,33 +48,33 @@ public:
 	static ESGSSirDirectionMovement FSGSCppBFLGetDirectionMovementV4(float ForwardL, float RightL);
 
 	/*
-	UFUNCTION(BlueprintCallable, Category="SGSCpp|BFLInvSysV4|Slot")
-	static void SGSCppBFLInvSysSlotCheckNameV4(USGSCppSirInvSysV4 * Owner, FName FindName,
-	bool &ResFindName, FSGSInvSysSlot &ResInvSlotData, int32 &ResIndexInSlots);
+	UFUNCTION(BlueprintCallable, Category="SGSCpp|BFLV4|Slot")
+	static void SGSCppBFLSlotCheckNameV4(USGSCppSirV4 * Owner, FName FindName,
+	bool &ResFindName, FSGSSlot &ResInvSlotData, int32 &ResIndexInSlots);
 
-	UFUNCTION(BlueprintCallable, Category="SGSCpp|BFLInvSysV4|Slot")
-	static void SGSCppBFLInvSysSlotAddNotStackableV4(USGSCppSirInvSysV4 * NewOwner, FSGSInvSysSlot NewSlot, bool &Added);
+	UFUNCTION(BlueprintCallable, Category="SGSCpp|BFLV4|Slot")
+	static void SGSCppBFLSlotAddNotStackableV4(USGSCppSirV4 * NewOwner, FSGSSlot NewSlot, bool &Added);
 	
-	UFUNCTION(BlueprintCallable, Category="SGSCpp|BFLInvSysV4|Slot")
-	static void SGSCppBFLInvSysSlotAddV4(USGSCppSirInvSysV4 * inOwner, FSGSInvSysSlot inInvSlot);
+	UFUNCTION(BlueprintCallable, Category="SGSCpp|BFLV4|Slot")
+	static void SGSCppBFLSlotAddV4(USGSCppSirV4 * inOwner, FSGSSlot inInvSlot);
 	
-	UFUNCTION(BlueprintCallable, Category="SGSCpp|BFLInvSysV4|Slot")
-	static void SGSCppBFLInvSysSlotsReplaceNotStackableV4(USGSCppSirInvSysV4 * inNewOwner, FSGSInvSysSlot inNewSlot, USGSCppSirInvSysV4 * inOldOwner, FSGSInvSysSlot inOldSlot);
+	UFUNCTION(BlueprintCallable, Category="SGSCpp|BFLV4|Slot")
+	static void SGSCppBFLSlotsReplaceNotStackableV4(USGSCppSirV4 * inNewOwner, FSGSSlot inNewSlot, USGSCppSirV4 * inOldOwner, FSGSSlot inOldSlot);
 	
-	UFUNCTION(BlueprintCallable, Category="SGSCpp|BFLInvSysV4|Slot", meta = (DisplayName = "SGS InvSys Slots Delete - Clear slot  V4"))
-	static void SGSCppBFLInvSysSlotClearV4(USGSCppSirInvSysV4 * inOwner, int32 inInvSlotIndex);
+	UFUNCTION(BlueprintCallable, Category="SGSCpp|BFLV4|Slot", meta = (DisplayName = "SGS  Slots Delete - Clear slot  V4"))
+	static void SGSCppBFLSlotClearV4(USGSCppSirV4 * inOwner, int32 inInvSlotIndex);
 	
-	UFUNCTION(BlueprintCallable, Category="SGSCpp|BFLInvSysV4|Slot")
-	static void SGSCppBFLInvSysSlotSetNewDataV4(USGSCppSirInvSysV4 * inOwner, FSGSInvSysSlot inOldInvSlot, FSGSInvSysSlot inNewInvSlot);
+	UFUNCTION(BlueprintCallable, Category="SGSCpp|BFLV4|Slot")
+	static void SGSCppBFLSlotSetNewDataV4(USGSCppSirV4 * inOwner, FSGSSlot inOldInvSlot, FSGSSlot inNewInvSlot);
 
-	UFUNCTION(BlueprintCallable, Category="SGSCpp|BFLInvSysV4|Count")
-	static void SGSCppBFLInvSysSlotCountSetV4(USGSCppSirInvSysV4 * inOwner, FSGSInvSysSlot inInvSlot, int32 inSetNewCount);
+	UFUNCTION(BlueprintCallable, Category="SGSCpp|BFLV4|Count")
+	static void SGSCppBFLSlotCountSetV4(USGSCppSirV4 * inOwner, FSGSSlot inInvSlot, int32 inSetNewCount);
 
-	UFUNCTION(BlueprintCallable, Category="SGSCpp|BFLInvSysV4|Slot")
-	static void SGSCppBFLInvSysSlotReplaceV4(USGSCppSirInvSysV4 * inOldOwner, USGSCppSirInvSysV4 * inNewOwner, int32 inNewIndex, FVector2D inNewGrid, FSGSInvSysSlot inOldInvSlot);
+	UFUNCTION(BlueprintCallable, Category="SGSCpp|BFLV4|Slot")
+	static void SGSCppBFLSlotReplaceV4(USGSCppSirV4 * inOldOwner, USGSCppSirV4 * inNewOwner, int32 inNewIndex, FVector2D inNewGrid, FSGSSlot inOldInvSlot);
 
-	UFUNCTION(BlueprintCallable, Category="SGSCpp|BFLInvSysV4|Slot")
-	static void SGSCppBFLInvSysFreeSlotSetV4(USGSCppSirInvSysV4 * inOldOwner, USGSCppSirInvSysV4 * inNewOwner, FSGSInvSysSlot inOldInvSlot, int32 inNewIndex);
+	UFUNCTION(BlueprintCallable, Category="SGSCpp|BFLV4|Slot")
+	static void SGSCppBFLFreeSlotSetV4(USGSCppSirV4 * inOldOwner, USGSCppSirV4 * inNewOwner, FSGSSlot inOldInvSlot, int32 inNewIndex);
 	*/
 
 };

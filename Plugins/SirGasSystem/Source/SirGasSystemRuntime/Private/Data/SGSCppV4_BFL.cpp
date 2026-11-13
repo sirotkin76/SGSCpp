@@ -142,8 +142,8 @@ void USGSCppV4_BFL::SGSCpp_BFL_Tag_Cancel(FGameplayTag AbilityTag)
 */
 
 /*
-void USGSCppSirInvSysBFLV4::SGSCppBFLInvSysSlotCheckNameV4(USGSCppSirInvSysV4* Owner, FName FindName,
-	bool &ResFindName, FSGSInvSysSlot &ResInvSlotData, int32 &ResIndexInSlots)
+void USGSCppBFLV4::SGSCppBFLSlotCheckNameV4(USGSCppSirV4* Owner, FName FindName,
+	bool &ResFindName, FSGSSlot &ResInvSlotData, int32 &ResIndexInSlots)
 {
 	if (!IsValid(Owner))
 	{
@@ -154,7 +154,7 @@ void USGSCppSirInvSysBFLV4::SGSCppBFLInvSysSlotCheckNameV4(USGSCppSirInvSysV4* O
 	
 	//for (TSubclassOf<UGameplayEffect> GameplayEffect : GameplayEffectsL)
 		
-	for (FSGSInvSysSlot slotsL : Owner->SGSInvSys_SlotsGet()) 
+	for (FSGSSlot slotsL : Owner->SGS_SlotsGet()) 
 	{
 		if (slotsL.SlotName == FindName)
 		{
@@ -178,38 +178,38 @@ void USGSCppSirInvSysBFLV4::SGSCppBFLInvSysSlotCheckNameV4(USGSCppSirInvSysV4* O
 	ResFindName = false;
 }
 
-void USGSCppSirInvSysBFLV4:: SGSCppBFLInvSysSlotAddNotStackableV4(USGSCppSirInvSysV4 * NewOwner,
-	FSGSInvSysSlot NewSlot, bool& Added)
+void USGSCppBFLV4:: SGSCppBFLSlotAddNotStackableV4(USGSCppSirV4 * NewOwner,
+	FSGSSlot NewSlot, bool& Added)
 {
 	if (!IsValid(NewOwner)) return;
 	
 	bool AddedLocal = false;
 
-	if (NewOwner->SGSInvSys_SlotsGet().Num() < NewOwner->SGSInvSys_GetMaxSlots())
+	if (NewOwner->SGS_SlotsGet().Num() < NewOwner->SGS_GetMaxSlots())
 	{
 		// Есть место для записи нового слота
 		// и слоты изначально не были созданы пустыми (под разную логику)
 		
-		NewOwner->FSGSInvSysSlots.Add(NewSlot);
+		NewOwner->FSGS_Slots.Add(NewSlot);
 		Added = true;
 		return;
 	}
 	else
 	{
 		// возможно слоты изначально были созданы пустыми
-		TArray<FSGSInvSysSlot> slotsL = NewOwner->SGSInvSys_SlotsGet();
+		TArray<FSGSSlot> slotsL = NewOwner->SGS_SlotsGet();
 		
-		for (int32 i = 0; i < NewOwner->SGSInvSys_SlotsGet().Num(); i++)
+		for (int32 i = 0; i < NewOwner->SGS_SlotsGet().Num(); i++)
 		{
-			FSGSInvSysSlot slotL = slotsL[i];
+			FSGSSlot slotL = slotsL[i];
 			
 			// Если дата ассета нет, значить слот пустой, можно записать туда данные 
 			if (!IsValid(slotL.SGSCppV4_InvSlot_DataAsset))
 			{
-				FSGSInvSysSlot NewSlotL = NewSlot;
+				FSGSSlot NewSlotL = NewSlot;
 				NewSlotL.SlotIndex = i;
 				slotsL[i] = NewSlotL;
-				NewOwner->SGSInvSys_SlotsSet(slotsL);
+				NewOwner->SGS_SlotsSet(slotsL);
 				
 				Added = true;
 				return;
@@ -222,148 +222,148 @@ void USGSCppSirInvSysBFLV4:: SGSCppBFLInvSysSlotAddNotStackableV4(USGSCppSirInvS
 	
 }
 
-void USGSCppSirInvSysBFLV4::SGSCppBFLInvSysSlotAddV4(USGSCppSirInvSysV4* inOwner, FSGSInvSysSlot inInvSlot)
+void USGSCppBFLV4::SGSCppBFLSlotAddV4(USGSCppSirV4* inOwner, FSGSSlot inInvSlot)
 {
 	if (!IsValid(inOwner)) return;
 	
-	inOwner->FSGSInvSysSlots.Add(inInvSlot);
+	inOwner->FSGS_Slots.Add(inInvSlot);
 }
 
-void USGSCppSirInvSysBFLV4::SGSCppBFLInvSysSlotsReplaceNotStackableV4(USGSCppSirInvSysV4* inNewOwner,
-                                                                      FSGSInvSysSlot inNewSlot, USGSCppSirInvSysV4* inOldOwner, FSGSInvSysSlot inOldSlot)
+void USGSCppBFLV4::SGSCppBFLSlotsReplaceNotStackableV4(USGSCppSirV4* inNewOwner,
+                                                                      FSGSSlot inNewSlot, USGSCppSirV4* inOldOwner, FSGSSlot inOldSlot)
 {
-	FSGSInvSysSlot inNewSlotL = inNewSlot;
-	FSGSInvSysSlot inOldSlotL = inOldSlot;
+	FSGSSlot inNewSlotL = inNewSlot;
+	FSGSSlot inOldSlotL = inOldSlot;
 	
-	SGSCppBFLInvSysSlotSetNewDataV4(inNewOwner, inNewSlotL, inOldSlotL);
-	SGSCppBFLInvSysSlotSetNewDataV4(inOldOwner, inOldSlotL, inNewSlotL);
+	SGSCppBFLSlotSetNewDataV4(inNewOwner, inNewSlotL, inOldSlotL);
+	SGSCppBFLSlotSetNewDataV4(inOldOwner, inOldSlotL, inNewSlotL);
 	
 }
 
-void USGSCppSirInvSysBFLV4::SGSCppBFLInvSysSlotCountSetV4(USGSCppSirInvSysV4* inOwner, FSGSInvSysSlot InvSlot,
+void USGSCppBFLV4::SGSCppBFLSlotCountSetV4(USGSCppSirV4* inOwner, FSGSSlot InvSlot,
                                                           int32 SetNewCount)
 {
 	if (!IsValid(inOwner)) return;
 	
-	TArray<FSGSInvSysSlot> FSGSInvSysSlotsL = inOwner->SGSInvSys_SlotsGet();
-	FSGSInvSysSlot InvSlotLocalClear;
+	TArray<FSGSSlot> FSGS_SlotsL = inOwner->SGS_SlotsGet();
+	FSGSSlot InvSlotLocalClear;
 	
 	
 	int32 indexLocal = InvSlot.SlotIndex;
 
-	if (InvSlot.SlotIndex < FSGSInvSysSlotsL.Num() )
+	if (InvSlot.SlotIndex < FSGS_SlotsL.Num() )
 	{
-		FSGSInvSysSlotsL.Insert(InvSlotLocalClear, indexLocal);
+		FSGS_SlotsL.Insert(InvSlotLocalClear, indexLocal);
 	};
 
-	if (InvSlot.SlotIndex < FSGSInvSysSlotsL.Num() ) return;
+	if (InvSlot.SlotIndex < FSGS_SlotsL.Num() ) return;
 		
-	FSGSInvSysSlotsL[InvSlot.SlotIndex].SGSCppV4_InvSlot_DataAsset = InvSlot.SGSCppV4_InvSlot_DataAsset;
-	FSGSInvSysSlotsL[InvSlot.SlotIndex].SlotCount = SetNewCount;
-	FSGSInvSysSlotsL[InvSlot.SlotIndex].SlotCondition = InvSlot.SlotCondition;
-	FSGSInvSysSlotsL[InvSlot.SlotIndex].SlotName = InvSlot.SlotName;
+	FSGS_SlotsL[InvSlot.SlotIndex].SGSCppV4_InvSlot_DataAsset = InvSlot.SGSCppV4_InvSlot_DataAsset;
+	FSGS_SlotsL[InvSlot.SlotIndex].SlotCount = SetNewCount;
+	FSGS_SlotsL[InvSlot.SlotIndex].SlotCondition = InvSlot.SlotCondition;
+	FSGS_SlotsL[InvSlot.SlotIndex].SlotName = InvSlot.SlotName;
 	
-	inOwner->SGSInvSys_SlotsSet(FSGSInvSysSlotsL);
+	inOwner->SGS_SlotsSet(FSGS_SlotsL);
 
 }
 
-void USGSCppSirInvSysBFLV4::SGSCppBFLInvSysSlotClearV4(USGSCppSirInvSysV4* inOwner, int32 inInvSlotIndex)
+void USGSCppBFLV4::SGSCppBFLSlotClearV4(USGSCppSirV4* inOwner, int32 inInvSlotIndex)
 {
 	if (!IsValid(inOwner)) return;
 
-	TArray<FSGSInvSysSlot> FSGSInvSysSlotsL = inOwner->SGSInvSys_SlotsGet();
-	FSGSInvSysSlot InvSlotLocalClear;
+	TArray<FSGSSlot> FSGS_SlotsL = inOwner->SGS_SlotsGet();
+	FSGSSlot InvSlotLocalClear;
 	
 
-	if (FSGSInvSysSlotsL.Num() <= inInvSlotIndex )
+	if (FSGS_SlotsL.Num() <= inInvSlotIndex )
 	{
-		for (int32 indexLocaCountl = FSGSInvSysSlotsL.Num(); indexLocaCountl < inInvSlotIndex; indexLocaCountl = FSGSInvSysSlotsL.Num() )
+		for (int32 indexLocaCountl = FSGS_SlotsL.Num(); indexLocaCountl < inInvSlotIndex; indexLocaCountl = FSGS_SlotsL.Num() )
 		{
-			FSGSInvSysSlotsL.Add(InvSlotLocalClear);
+			FSGS_SlotsL.Add(InvSlotLocalClear);
 		};
 	};
 	
-	FSGSInvSysSlotsL[inInvSlotIndex].SGSCppV4_InvSlot_DataAsset = nullptr;
-	FSGSInvSysSlotsL[inInvSlotIndex].SlotCount = -1;
-	FSGSInvSysSlotsL[inInvSlotIndex].SlotCondition = -1;
-	FSGSInvSysSlotsL[inInvSlotIndex].SlotIndex = inInvSlotIndex;
-	FSGSInvSysSlotsL[inInvSlotIndex].SlotName = "";
+	FSGS_SlotsL[inInvSlotIndex].SGSCppV4_InvSlot_DataAsset = nullptr;
+	FSGS_SlotsL[inInvSlotIndex].SlotCount = -1;
+	FSGS_SlotsL[inInvSlotIndex].SlotCondition = -1;
+	FSGS_SlotsL[inInvSlotIndex].SlotIndex = inInvSlotIndex;
+	FSGS_SlotsL[inInvSlotIndex].SlotName = "";
 
-	inOwner->SGSInvSys_SlotsSet(FSGSInvSysSlotsL);
+	inOwner->SGS_SlotsSet(FSGS_SlotsL);
 	
 }
 
-void USGSCppSirInvSysBFLV4::SGSCppBFLInvSysSlotSetNewDataV4(USGSCppSirInvSysV4* inOwner,
-	FSGSInvSysSlot inOldInvSlot, FSGSInvSysSlot inNewInvSlot)
+void USGSCppBFLV4::SGSCppBFLSlotSetNewDataV4(USGSCppSirV4* inOwner,
+	FSGSSlot inOldInvSlot, FSGSSlot inNewInvSlot)
 {
 	if (!IsValid(inOwner)) return;
 
-	TArray<FSGSInvSysSlot> FSGSInvSysSlotsL = inOwner->SGSInvSys_SlotsGet();
+	TArray<FSGSSlot> FSGS_SlotsL = inOwner->SGS_SlotsGet();
 
 	/*
-	FSGSInvSysSlotsL[inNewInvSlot.SlotIndex].SGSCppV4_InvSlot_DataAsset = inOldInvSlot.SGSCppV4_InvSlot_DataAsset;
-	FSGSInvSysSlotsL[inNewInvSlot.SlotIndex].SlotCount = inOldInvSlot.SlotCount;
-	FSGSInvSysSlotsL[inNewInvSlot.SlotIndex].SlotCondition = inOldInvSlot.SlotCondition;
+	FSGS_SlotsL[inNewInvSlot.SlotIndex].SGSCppV4_InvSlot_DataAsset = inOldInvSlot.SGSCppV4_InvSlot_DataAsset;
+	FSGS_SlotsL[inNewInvSlot.SlotIndex].SlotCount = inOldInvSlot.SlotCount;
+	FSGS_SlotsL[inNewInvSlot.SlotIndex].SlotCondition = inOldInvSlot.SlotCondition;
 	
-	FSGSInvSysSlotsL[inNewInvSlot.SlotIndex].SlotIndex = inNewInvSlot.SlotIndex;
+	FSGS_SlotsL[inNewInvSlot.SlotIndex].SlotIndex = inNewInvSlot.SlotIndex;
 	
-	FSGSInvSysSlotsL[inNewInvSlot.SlotIndex].SlotName = inOldInvSlot.SlotName;;
+	FSGS_SlotsL[inNewInvSlot.SlotIndex].SlotName = inOldInvSlot.SlotName;;
 
-	inOwner->SGSInvSys_SlotsSet(FSGSInvSysSlotsL);
+	inOwner->SGS_SlotsSet(FSGS_SlotsL);
 	#1#
-	FSGSInvSysSlotsL[inOldInvSlot.SlotIndex].SGSCppV4_InvSlot_DataAsset = inNewInvSlot.SGSCppV4_InvSlot_DataAsset;
-	FSGSInvSysSlotsL[inOldInvSlot.SlotIndex].SlotCount = inNewInvSlot.SlotCount;
-	FSGSInvSysSlotsL[inOldInvSlot.SlotIndex].SlotCondition = inNewInvSlot.SlotCondition;
+	FSGS_SlotsL[inOldInvSlot.SlotIndex].SGSCppV4_InvSlot_DataAsset = inNewInvSlot.SGSCppV4_InvSlot_DataAsset;
+	FSGS_SlotsL[inOldInvSlot.SlotIndex].SlotCount = inNewInvSlot.SlotCount;
+	FSGS_SlotsL[inOldInvSlot.SlotIndex].SlotCondition = inNewInvSlot.SlotCondition;
 	
-	FSGSInvSysSlotsL[inOldInvSlot.SlotIndex].SlotIndex = inOldInvSlot.SlotIndex;
+	FSGS_SlotsL[inOldInvSlot.SlotIndex].SlotIndex = inOldInvSlot.SlotIndex;
 	
-	FSGSInvSysSlotsL[inOldInvSlot.SlotIndex].SlotName = inNewInvSlot.SlotName;;
+	FSGS_SlotsL[inOldInvSlot.SlotIndex].SlotName = inNewInvSlot.SlotName;;
 
-	inOwner->SGSInvSys_SlotsSet(FSGSInvSysSlotsL);
+	inOwner->SGS_SlotsSet(FSGS_SlotsL);
 }
 
-void USGSCppSirInvSysBFLV4::SGSCppBFLInvSysSlotReplaceV4(USGSCppSirInvSysV4* inOldOwner, USGSCppSirInvSysV4* inNewOwner,
-	int32 inNewIndex, FVector2D inNewGrid, FSGSInvSysSlot inOldInvSlot)
+void USGSCppBFLV4::SGSCppBFLSlotReplaceV4(USGSCppSirV4* inOldOwner, USGSCppSirV4* inNewOwner,
+	int32 inNewIndex, FVector2D inNewGrid, FSGSSlot inOldInvSlot)
 {
 	if (!IsValid(inOldOwner)) return;
 	if (!IsValid(inNewOwner)) return;
 
-	TArray<FSGSInvSysSlot> FSGSInvSysSlotsL = inOldOwner->SGSInvSys_SlotsGet();
+	TArray<FSGSSlot> FSGS_SlotsL = inOldOwner->SGS_SlotsGet();
 	
 }
 
-void USGSCppSirInvSysBFLV4::SGSCppBFLInvSysFreeSlotSetV4(USGSCppSirInvSysV4* inOldOwner, USGSCppSirInvSysV4* inNewOwner,
-	FSGSInvSysSlot inOldInvSlot, int32 inNewIndex)
+void USGSCppBFLV4::SGSCppBFLFreeSlotSetV4(USGSCppSirV4* inOldOwner, USGSCppSirV4* inNewOwner,
+	FSGSSlot inOldInvSlot, int32 inNewIndex)
 {
 	if (!IsValid(inOldOwner)) return;
 	if (!IsValid(inNewOwner)) return;
 
-	FSGSInvSysSlot inOldInvSlotLocal;
+	FSGSSlot inOldInvSlotLocal;
 
-	TArray<FSGSInvSysSlot> FSGSInvSysSlotsL = inNewOwner->SGSInvSys_SlotsGet();
+	TArray<FSGSSlot> FSGS_SlotsL = inNewOwner->SGS_SlotsGet();
 
-	if (FSGSInvSysSlotsL.Num() < inNewIndex)
+	if (FSGS_SlotsL.Num() < inNewIndex)
 	{
-		int32 localInt = FSGSInvSysSlotsL.Num() - inNewIndex;
+		int32 localInt = FSGS_SlotsL.Num() - inNewIndex;
 
 		for(int32 i = 0; i < localInt; i++)
 		{
-			FSGSInvSysSlotsL.Add(inOldInvSlotLocal);
+			FSGS_SlotsL.Add(inOldInvSlotLocal);
 		}
 		
 	}
 
-	FSGSInvSysSlotsL[inNewIndex].SGSCppV4_InvSlot_DataAsset =	inOldInvSlot.SGSCppV4_InvSlot_DataAsset;
-	FSGSInvSysSlotsL[inNewIndex].SlotCount =						inOldInvSlot.SlotCount;
-	FSGSInvSysSlotsL[inNewIndex].SlotCondition =					inOldInvSlot.SlotCondition;
-	FSGSInvSysSlotsL[inNewIndex].SlotName =							inOldInvSlot.SlotName;;
+	FSGS_SlotsL[inNewIndex].SGSCppV4_InvSlot_DataAsset =	inOldInvSlot.SGSCppV4_InvSlot_DataAsset;
+	FSGS_SlotsL[inNewIndex].SlotCount =						inOldInvSlot.SlotCount;
+	FSGS_SlotsL[inNewIndex].SlotCondition =					inOldInvSlot.SlotCondition;
+	FSGS_SlotsL[inNewIndex].SlotName =							inOldInvSlot.SlotName;;
 	
-	FSGSInvSysSlotsL[inNewIndex].SlotIndex =						inNewIndex;
+	FSGS_SlotsL[inNewIndex].SlotIndex =						inNewIndex;
 
-	inNewOwner->SGSInvSys_SlotsSet(FSGSInvSysSlotsL);
+	inNewOwner->SGS_SlotsSet(FSGS_SlotsL);
 
 	// обнуляем, чистим, удаляем старый слот
-	SGSCppBFLInvSysSlotClearV4(inOldOwner, inOldInvSlot.SlotIndex);
+	SGSCppBFLSlotClearV4(inOldOwner, inOldInvSlot.SlotIndex);
 }
 */
 

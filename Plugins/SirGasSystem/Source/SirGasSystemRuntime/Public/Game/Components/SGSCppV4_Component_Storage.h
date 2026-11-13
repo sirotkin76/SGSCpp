@@ -23,7 +23,7 @@ public:
 
 	//UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "FSGSCpp|InventarySystem|Variables")
 	UPROPERTY()
-	TArray<FSGSCppV4Slot> FSGSInvSysSlots;
+	TArray<FSGSCppV4Slot> FSGSCpp_Slots;
 
 	UPROPERTY()
 	int32 MaxSlots;
@@ -36,14 +36,10 @@ public:
 	// Called every frame
 	virtual void TickComponent(float DeltaTime, ELevelTick TickType, FActorComponentTickFunction* ThisTickFunction) override;
 
-	UFUNCTION(BlueprintCallable, BlueprintPure, Category = "FSGSCpp|Storage|Functions", meta = (DisplayName = "SGS InvSys Slots Get V4"))
+	UFUNCTION(BlueprintCallable, BlueprintPure, Category = "FSGSCpp|Storage|Functions", meta = (DisplayName = "SGS Cpp V4 Storage Slots Get "))
 	TArray<FSGSCppV4Slot> FSGSCpp_Slots_Get();
 		
-	UFUNCTION(BlueprintCallable, Category = "FSGSCpp|Storage|Functions", meta = (DisplayName = "SGS InvSys Slots Set V4"))
+	UFUNCTION(BlueprintCallable, Category = "FSGSCpp|Storage|Functions", meta = (DisplayName = "SGS Cpp V4 Storage Slots Set"))
 	void FSGSCpp_Slots_Set(TArray<FSGSCppV4Slot> NewItems);
 
-	UFUNCTION(BlueprintImplementableEvent, BlueprintCallable, Category = "FSGSCpp|InventarySystem|Events")
-	void EvUpdateLevel(int32 SetNewLevel);
-
-	
 };

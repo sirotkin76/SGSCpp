@@ -35,10 +35,10 @@ void USGSCppV4_Component_Storage::TickComponent(float DeltaTime, ELevelTick Tick
 
 TArray<FSGSCppV4Slot> USGSCppV4_Component_Storage::FSGSCpp_Slots_Get()
 {
-	return  FSGSInvSysSlots;
+	return  FSGSCpp_Slots;
 }
 
 void USGSCppV4_Component_Storage::FSGSCpp_Slots_Set(TArray<FSGSCppV4Slot> NewItems)
 {
-	FSGSInvSysSlots = NewItems;
+	FSGSCpp_Slots = NewItems;
 }
