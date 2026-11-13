@@ -21,6 +21,7 @@ USGSCppV4_AttributeSet::USGSCppV4_AttributeSet()
 	, Damage(0.0f)
 	, ExperienceCur(0.0f)
 	, ExperienceMax(1.0f)
+	, Point(0.0f)
 {
 }
 
@@ -52,6 +53,9 @@ void USGSCppV4_AttributeSet::PreAttributeChange(const FGameplayAttribute& Attrib
 	else if (Attribute == GetOxygenAttribute())
 	{
 		AdjustAttributeForMaxChange(Oxygen, MaxOxygen, NewValue, GetOxygenAttribute());
+	}
+	else if (Attribute == GetPointAttribute())
+	{
 	}
 }
 
@@ -85,6 +89,8 @@ void USGSCppV4_AttributeSet::GetLifetimeReplicatedProps(TArray<FLifetimeProperty
 	
 	DOREPLIFETIME(USGSCppV4_AttributeSet, Oxygen);
 	DOREPLIFETIME(USGSCppV4_AttributeSet, MaxOxygen);
+	
+	DOREPLIFETIME(USGSCppV4_AttributeSet, Point);
 
 	
 }
@@ -208,6 +214,11 @@ void USGSCppV4_AttributeSet::OnRep_MaxOxygen(const FGameplayAttributeData& OldVa
 	GAMEPLAYATTRIBUTE_REPNOTIFY(USGSCppV4_AttributeSet, MaxOxygen, OldValue);
 }
 
+void USGSCppV4_AttributeSet::OnRep_Point(const FGameplayAttributeData& OldValue)
+{
+	GAMEPLAYATTRIBUTE_REPNOTIFY(USGSCppV4_AttributeSet, Point, OldValue);
+}
+
 void USGSCppV4_AttributeSet::ExperienceCalculateLogic(float ExpNew)
 {
 	float ExpLocal = ExpNew + GetExperienceCur();
@@ -227,6 +238,8 @@ void USGSCppV4_AttributeSet::ExperienceCalculateLogic(float ExpNew)
 		ISGSCppV4_Interface_GameplayAbility::Execute_FSGSCppV4_Interface_Player_NewLevel(GetOwningActor());
 			
 		USGSCppV4_AbilitySystemComponent* local = Cast<USGSCppV4_AbilitySystemComponent>(UAbilitySystemBlueprintLibrary::GetAbilitySystemComponent(GetOwningActor()));
+		
+		local->FSGSCppV4_NewLevel();
 		local->FSGSCppV4_Effects_Update();
 
 		if (RemainderL == 0.0f)
@@ -425,5 +438,9 @@ void USGSCppV4_AttributeSet::PostGameplayEffectExecute(const FGameplayEffectModC
 	else if (Data.EvaluatedData.Attribute == GetExperienceCurAttribute())
 	{
 		ExperienceCalculateLogic(DeltaValue);
-	}
+	}/*
+	else if (Data.EvaluatedData.Attribute == GetPointAttribute())
+	{
+		SetPoint(GetPoint() + DeltaValue);
+	}*/
 }

@@ -38,7 +38,7 @@ public:
 	static bool FSGSCpp_BFL_Tag_Activate(USGSCppV4_AbilitySystemComponent* USGSCppV4_AbilitySystemComponent, FGameplayTag AbilityTag);
 
 	UFUNCTION(BlueprintCallable, Category="FSGSCpp|BFL|GAS", meta = (DefaultToSelf = "Caller"))
-	static void FSGSCpp_BFL_Tag_Cancel(UObject* Caller, FGameplayTag AbilityTag);
+	static void FSGSCpp_BFL_Tag_Cancel(USGSCppV4_AbilitySystemComponent* USGSCppV4_AbilitySystemComponent, FGameplayTag AbilityTag);
 
 
 	UFUNCTION(BlueprintCallable, Category="FSGSCpp|BFL|Inventory")

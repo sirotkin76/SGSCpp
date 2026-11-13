@@ -204,6 +204,8 @@ bool USGSCppV4_AbilitySystemComponent::FSGSCppV4_Ability_Cooldown_Tag_Get(FGamep
 void USGSCppV4_AbilitySystemComponent::FSGSCppV4_Attr_Base_Get(float& AttackPower, float& DefensePower,
 	float& MoveSpeed, float& Damage, int32& Level)
 {
+	if (!IsValid(AttributeSet)) return;
+
 	AttackPower = AttributeSet->GetAttackPower();
 	DefensePower = AttributeSet->GetDefensePower();
 	MoveSpeed = AttributeSet->GetMoveSpeed();
@@ -218,8 +220,16 @@ int32 USGSCppV4_AbilitySystemComponent::FSGSCppV4_Attr_Level_Get()
 	return 0;
 }
 
+int32 USGSCppV4_AbilitySystemComponent::FSGSCppV4_Attr_Point_Get()
+{
+	if (IsValid(AttributeSet)) return AttributeSet->GetPoint();
+	return 0;
+}
+
 void USGSCppV4_AbilitySystemComponent::FSGSCppV4_Attr_Health_Get(float& Health, float& HealthMax, float& Percent)
 {
+	if (!IsValid(AttributeSet)) return;
+	
 	Health = AttributeSet->GetHealth();
 	HealthMax = AttributeSet->GetMaxHealth();
 	Percent = Health / HealthMax;
@@ -227,6 +237,8 @@ void USGSCppV4_AbilitySystemComponent::FSGSCppV4_Attr_Health_Get(float& Health, 
 
 void USGSCppV4_AbilitySystemComponent::FSGSCppV4_Attr_Stamina_Get(float& Stamina, float& StaminaMax, float& Percent)
 {
+	if (!IsValid(AttributeSet)) return;
+	
 	Stamina = AttributeSet->GetStamina();
 	StaminaMax = AttributeSet->GetMaxStamina();
 	Percent = Stamina / StaminaMax;
@@ -234,6 +246,8 @@ void USGSCppV4_AbilitySystemComponent::FSGSCppV4_Attr_Stamina_Get(float& Stamina
 
 void USGSCppV4_AbilitySystemComponent::FSGSCppV4_Attr_Mana_Get(float& Mana, float& ManaMax, float& Percent)
 {
+	if (!IsValid(AttributeSet)) return;
+	
 	Mana = AttributeSet->GetMana();
 	ManaMax = AttributeSet->GetMaxMana();
 	Percent = Mana / ManaMax;
@@ -242,6 +256,8 @@ void USGSCppV4_AbilitySystemComponent::FSGSCppV4_Attr_Mana_Get(float& Mana, floa
 void USGSCppV4_AbilitySystemComponent::FSGSCppV4_Attr_Experience_Get(float& Experience, float& ExperienceMax,
 	float& Percent)
 {
+	if (!IsValid(AttributeSet)) return;
+	
 	Experience = AttributeSet->GetExperienceCur();
 	ExperienceMax = AttributeSet->GetExperienceMax();
 	Percent = Experience / ExperienceMax;
@@ -249,6 +265,8 @@ void USGSCppV4_AbilitySystemComponent::FSGSCppV4_Attr_Experience_Get(float& Expe
 
 void USGSCppV4_AbilitySystemComponent::FSGSCppV4_Attr_Water_Get(float& Water, float& WaterMax, float& Percent)
 {
+	if (!IsValid(AttributeSet)) return;
+	
 	Water = AttributeSet->GetWater();
 	WaterMax = AttributeSet->GetMaxWater();
 	Percent = Water / WaterMax;
@@ -256,6 +274,8 @@ void USGSCppV4_AbilitySystemComponent::FSGSCppV4_Attr_Water_Get(float& Water, fl
 
 void USGSCppV4_AbilitySystemComponent::FSGSCppV4_Attr_Food_Get(float& Food, float& FoodMax, float& Percent)
 {
+	if (!IsValid(AttributeSet)) return;
+	
 	Food = AttributeSet->GetFood();
 	FoodMax = AttributeSet->GetMaxFood();
 	Percent = Food / FoodMax;
@@ -263,6 +283,8 @@ void USGSCppV4_AbilitySystemComponent::FSGSCppV4_Attr_Food_Get(float& Food, floa
 
 void USGSCppV4_AbilitySystemComponent::FSGSCppV4_Attr_Oxygen_Get(float& Oxygen, float& OxygenMax, float& Percent)
 {
+	if (!IsValid(AttributeSet)) return;
+
 	Oxygen = AttributeSet->GetOxygen();
 	OxygenMax = AttributeSet->GetMaxOxygen();
 	Percent = Oxygen / OxygenMax;
@@ -279,7 +301,7 @@ bool USGSCppV4_AbilitySystemComponent::FSGSCppV4_Ability_Tag_Activate(FGameplayT
 {
 	FGameplayTagContainer GameplayTagContainer;
 	GameplayTagContainer.AddTag(AbilityTagL);
-
+	// bAbilitiesInitialized
 	return TryActivateAbilitiesByTag(GameplayTagContainer, bAllowRemoteActivation);
 }
 
@@ -288,7 +310,15 @@ void USGSCppV4_AbilitySystemComponent::FSGSCppV4_Ability_Tag_Cancel(FGameplayTag
 	FGameplayTagContainer GameplayTagContainer;
 	GameplayTagContainer.AddTag(AbilityTag);
 
-	CancelAbilities(&GameplayTagContainer, nullptr, nullptr);
+	TArray<FGameplayAbilitySpecHandle> AbilitiesToRemove;
+
+	for (const FGameplayAbilitySpec& Spec : GetActivatableAbilities())
+	{
+		if (Spec.Ability->GetAssetTags().HasTag(AbilityTag))
+		{
+			CancelAbilities(&GameplayTagContainer, nullptr, nullptr);
+		}
+	}
 }
 
 void USGSCppV4_AbilitySystemComponent::FSGSCppV4_Abilities_Tags_Find(FGameplayTagContainer AbilityTags,
@@ -312,6 +342,8 @@ void USGSCppV4_AbilitySystemComponent::FSGSCppV4_Effects_Update()
 void USGSCppV4_AbilitySystemComponent::FSGSCppV4_Game_New_Init_Attr()
 {
 	// check(GetAbilitySystemComponent());
+
+	FSGSCppV4_Init();
 	
 	if (!IsValid(SGSCppV4_DataAsset_Init)) return;
 	
@@ -411,12 +443,15 @@ void USGSCppV4_AbilitySystemComponent::FSGSCppV4_Ability_Del(TSubclassOf <UGamep
 {
 	//if (AbilityTag.IsValid()) FSGSCppV4_Ability_Tag_Cancel(AbilityTag);
 
+	if (V4_GameplayAbilityClasses.Num() <= 0) return;
+	if (V4_GameplayAbilityClasses.Contains(UGameplayAbilityL) == false) return;
 	if (!IsValid(UGameplayAbilityL)) return;
+
+	if (GetActivatableAbilities().Num()<=0) return;
 	
-	if (!V4_GameplayAbilityClasses.Contains(UGameplayAbilityL)) return;
 
 	TArray<FGameplayAbilitySpecHandle> AbilitiesToRemove;
-
+	
 	for (const FGameplayAbilitySpec& Spec : GetActivatableAbilities())
 	{
 		if ((Spec.SourceObject == this) && Spec.Ability.GetClass() == UGameplayAbilityL)
@@ -424,6 +459,9 @@ void USGSCppV4_AbilitySystemComponent::FSGSCppV4_Ability_Del(TSubclassOf <UGamep
 			AbilitiesToRemove.Add(Spec.Handle);
 			ClearAbility(Spec.Handle);
 			V4_GameplayAbilityClasses.Remove(Spec.Ability->GetClass());
+
+			return;
+			
 		}
 	}
 

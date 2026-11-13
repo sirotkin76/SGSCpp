@@ -64,7 +64,12 @@ public:
 
 	/** Attempts to remove any startup gameplay abilities */
 	void RemoveStartupGameplayAbilities();
-		
+	
+	UFUNCTION(BlueprintImplementableEvent, Category = "FSGSCpp|Event")
+	void FSGSCppV4_NewLevel();
+
+	UFUNCTION(BlueprintImplementableEvent, Category = "FSGSCpp|Event")
+	void FSGSCppV4_Init();
 	/**
 	* Skill
 	*/
@@ -99,11 +104,14 @@ public:
 	* Abilities - Getter - Attribute
 	*/
 	
-	UFUNCTION(BlueprintCallable, Category = "FSGSCpp|Getter", meta = (Keywords = "FSGSCppV4 Get Character Attr"))
+	UFUNCTION(BlueprintPure, Category = "FSGSCpp|Getter", meta = (Keywords = "FSGSCppV4 Get Character Attr"))
 	void FSGSCppV4_Attr_Base_Get(float& AttackPower, float& DefensePower, float& MoveSpeed, float& Damage, int32& Level);
 
-	UFUNCTION(BlueprintCallable, Category = "FSGSCpp|Getter", meta = (Keywords = "FSGSCppV4 Get Character Attr"))
+	UFUNCTION(BlueprintPure, Category = "FSGSCpp|Getter", meta = (Keywords = "FSGSCppV4 Get Character Attr"))
 	int32 FSGSCppV4_Attr_Level_Get();
+	
+	UFUNCTION(BlueprintPure, Category = "FSGSCpp|Getter", meta = (Keywords = "FSGSCppV4 Get Character Attr"))
+	int32 FSGSCppV4_Attr_Point_Get();
 	
 	UFUNCTION(BlueprintPure, Category = "FSGSCpp|Getter", meta = (Keywords = "FSGSCppV4 Get Health | HP"))
 	void FSGSCppV4_Attr_Health_Get(float &Health, float &HealthMax, float &Percent);
@@ -111,7 +119,7 @@ public:
 	UFUNCTION(BlueprintPure, Category = "FSGSCpp|Getter", meta = (Keywords = "FSGSCppV4 Get Stamina | SP"))
 	void FSGSCppV4_Attr_Stamina_Get(float &Stamina, float &StaminaMax, float &Percent);
 
-	UFUNCTION(BlueprintCallable, Category = "FSGSCpp|Getter", meta = (Keywords = "FSGSCppV4 Get Mana | MP"))
+	UFUNCTION(BlueprintPure, Category = "FSGSCpp|Getter", meta = (Keywords = "FSGSCppV4 Get Mana | MP"))
 	void FSGSCppV4_Attr_Mana_Get(float &Mana, float &ManaMax, float &Percent);
 
 	UFUNCTION(BlueprintPure, Category = "FSGSCpp|Getter", meta = (Keywords = "FSGSCppV4 Get Experience | XP"))
@@ -167,7 +175,7 @@ public:
 
 	// GameplayEffect
 	UFUNCTION(BlueprintCallable, Category = "FSGSCpp|GameplayEffect")
-	virtual void FSGSCppV4_GameplayEffect_Add(TSubclassOf<UGameplayEffect> GameplayEffectL, int32 level);
+	void FSGSCppV4_GameplayEffect_Add(TSubclassOf<UGameplayEffect> GameplayEffectL, int32 level);
 
 	/**
 	* Данные Setter

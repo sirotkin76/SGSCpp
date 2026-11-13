@@ -123,6 +123,10 @@ public:
 	UPROPERTY(BlueprintReadOnly, Category = "Oxygen", ReplicatedUsing=OnRep_MaxOxygen)
 	FGameplayAttributeData MaxOxygen;
 	ATTRIBUTE_ACCESSORS(USGSCppV4_AttributeSet, MaxOxygen)
+	
+	UPROPERTY(BlueprintReadOnly, Category = "Point", ReplicatedUsing=OnRep_Point)
+	FGameplayAttributeData Point;
+	ATTRIBUTE_ACCESSORS(USGSCppV4_AttributeSet, Point)
 
 	/** Attr */
 	UFUNCTION(BlueprintCallable, Category = "Attr")
@@ -186,6 +190,9 @@ protected:
 
 	UFUNCTION()
 	virtual void OnRep_MaxOxygen(const FGameplayAttributeData& OldValue);
+	
+	UFUNCTION()
+	virtual void OnRep_Point(const FGameplayAttributeData& OldValue);
 	
 	UFUNCTION()
 	void ExperienceCalculateLogic(float ExpNew);

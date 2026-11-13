@@ -71,15 +71,12 @@ bool USGSCppV4_BFL::FSGSCpp_BFL_Tag_Activate(USGSCppV4_AbilitySystemComponent* U
 	return USGSCppV4_AbilitySystemComponent->FSGSCppV4_Ability_Tag_Activate(AbilityTag, true);
 }
 
-void USGSCppV4_BFL::FSGSCpp_BFL_Tag_Cancel(UObject* Caller, FGameplayTag AbilityTag)
+void USGSCppV4_BFL::FSGSCpp_BFL_Tag_Cancel(USGSCppV4_AbilitySystemComponent* USGSCppV4_AbilitySystemComponent, FGameplayTag AbilityTag)
 {
-	if (!Caller) return ;
-	
-	USGSCppV4_AbilitySystemComponent* local = Cast<AActor>(Caller)->FindComponentByClass<USGSCppV4_AbilitySystemComponent>();
+	if (!IsValid(USGSCppV4_AbilitySystemComponent)) return ;
+	if (AbilityTag == FGameplayTag::EmptyTag) return ;
 
-	if (!IsValid(local)) return;
-
-	return local->FSGSCppV4_Ability_Tag_Cancel(AbilityTag);
+	return USGSCppV4_AbilitySystemComponent->FSGSCppV4_Ability_Tag_Cancel(AbilityTag);
 }
 
 
