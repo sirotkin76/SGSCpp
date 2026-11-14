@@ -19,7 +19,7 @@ class USGSCppV4_DataAsset_Attr_Slot;
 class URPGAbilitySystemComponent;
 class UGameplayEffect;
 class URPGTargetType;
-class USGSCppV4_DataAsset_Attr_Skill;
+class USGSCppV4_DataAsset_Attr_Slot_Skill;
 
 
 USTRUCT(BlueprintType)
@@ -30,7 +30,7 @@ struct FSGSCppV4_Ability_Update
 public:
 	
 	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category="SGSCpp|AbilityUpdate")
-	USGSCppV4_DataAsset_Attr_Skill * SGSCppV4_DataAsset_Attr_Ability;
+	USGSCppV4_DataAsset_Attr_Slot_Skill * SGSCppV4_DataAsset_Attr_Ability;
 
 	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category="SGSCpp|AbilityUpdate")
 	int32 AbiltyLevel = 1;

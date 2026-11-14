@@ -4,7 +4,7 @@
 #include "Data/SGSCppV4_BFL.h"
 
 #include "AbilitySystemBlueprintLibrary.h"
-#include "Abilities/SGSCppV4_AbilitySystemComponent.h"
+#include "Game/Components/SGSCppV4_Component_AbilitySystem.h"
 #include "Kismet/GameplayStatics.h"
 #include "Data/SGSCppV4_Enumerations.h"
 #include "GameFramework/Actor.h"
@@ -32,9 +32,9 @@ ESGSSirDirectionMovement USGSCppV4_BFL::FSGSCppBFLGetDirectionMovementV4(float F
 	return ESGSSirDirectionMovement::Forward_None;
 }
 
-void USGSCppV4_BFL::FSGSCpp_BFL_Player_Skill_ActivateById(const UObject* WorldContextObject, int32 idSkill, bool &SkillIsValid, int32 &SkillLevel,  USGSCppV4_DataAsset_Attr_Skill*& SKill)
+void USGSCppV4_BFL::FSGSCpp_BFL_Player_Skill_ActivateById(const UObject* WorldContextObject, int32 idSkill, bool &SkillIsValid, int32 &SkillLevel,  USGSCppV4_DataAsset_Attr_Slot_Skill*& SKill)
 {
-	USGSCppV4_AbilitySystemComponent*  local = FSGSCpp_BFL_Player_AbilitySystemComponent_Get(WorldContextObject, 1);
+	USGSCppV4_Component_AbilitySystem*  local = FSGSCpp_BFL_Player_AbilitySystemComponent_Get(WorldContextObject, 1);
 
 	//if (IsValid(local)) return local->FSGSCppV4_BFL_Player_Skill_ActivateById(idSkill , SkillIsValid , SkillLevel , SKill);
 
@@ -44,7 +44,7 @@ void USGSCppV4_BFL::FSGSCpp_BFL_Player_Skill_ActivateById(const UObject* WorldCo
 	return;
 }
 
-USGSCppV4_AbilitySystemComponent* USGSCppV4_BFL::FSGSCpp_BFL_Player_AbilitySystemComponent_Get(
+USGSCppV4_Component_AbilitySystem* USGSCppV4_BFL::FSGSCpp_BFL_Player_AbilitySystemComponent_Get(
 	const UObject* WorldContextObject, int32 PlayerIndex)
 {
 	// Получаем базовый APawn через GameplayStatics
@@ -54,7 +54,7 @@ USGSCppV4_AbilitySystemComponent* USGSCppV4_BFL::FSGSCpp_BFL_Player_AbilitySyste
 		return nullptr;
 	}
 	
-	USGSCppV4_AbilitySystemComponent* local = Cast<USGSCppV4_AbilitySystemComponent>(UAbilitySystemBlueprintLibrary::GetAbilitySystemComponent(BasePawn));
+	USGSCppV4_Component_AbilitySystem* local = Cast<USGSCppV4_Component_AbilitySystem>(UAbilitySystemBlueprintLibrary::GetAbilitySystemComponent(BasePawn));
 	
 	if (IsValid(local)) return local;
 
@@ -62,7 +62,7 @@ USGSCppV4_AbilitySystemComponent* USGSCppV4_BFL::FSGSCpp_BFL_Player_AbilitySyste
 
 }
 
-bool USGSCppV4_BFL::FSGSCpp_BFL_Tag_Activate(USGSCppV4_AbilitySystemComponent* USGSCppV4_AbilitySystemComponent, FGameplayTag AbilityTag)
+bool USGSCppV4_BFL::FSGSCpp_BFL_Tag_Activate(USGSCppV4_Component_AbilitySystem* USGSCppV4_AbilitySystemComponent, FGameplayTag AbilityTag)
 {
 	if (!IsValid(USGSCppV4_AbilitySystemComponent)) return false;
 	
@@ -71,7 +71,7 @@ bool USGSCppV4_BFL::FSGSCpp_BFL_Tag_Activate(USGSCppV4_AbilitySystemComponent* U
 	return USGSCppV4_AbilitySystemComponent->FSGSCppV4_Ability_Tag_Activate(AbilityTag, true);
 }
 
-void USGSCppV4_BFL::FSGSCpp_BFL_Tag_Cancel(USGSCppV4_AbilitySystemComponent* USGSCppV4_AbilitySystemComponent, FGameplayTag AbilityTag)
+void USGSCppV4_BFL::FSGSCpp_BFL_Tag_Cancel(USGSCppV4_Component_AbilitySystem* USGSCppV4_AbilitySystemComponent, FGameplayTag AbilityTag)
 {
 	if (!IsValid(USGSCppV4_AbilitySystemComponent)) return ;
 	if (AbilityTag == FGameplayTag::EmptyTag) return ;

@@ -18,7 +18,7 @@ FSGSCppV4_GE_ContainerSpec USGSCppV4_GameplayAbility::MakeEffectContainerSpecFro
 	
 	AActor* OwningActor = GetOwningActorFromActorInfo();
 	ASGSCppV4_Character* OwningCharacter = Cast<ASGSCppV4_Character>(OwningActor);
-	USGSCppV4_AbilitySystemComponent* OwningASC = USGSCppV4_AbilitySystemComponent::GetAbilitySystemComponentFromActor(OwningActor);
+	USGSCppV4_Component_AbilitySystem* OwningASC = USGSCppV4_Component_AbilitySystem::GetAbilitySystemComponentFromActor(OwningActor);
 	
 	if (OwningASC)
 	{

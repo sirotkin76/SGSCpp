@@ -11,7 +11,7 @@ ASGSCppV4_Pawn::ASGSCppV4_Pawn()
 	PrimaryActorTick.bCanEverTick = true;
 
 	// Create ability system component, and set it to be explicitly replicated
-	AbilitySystemComponent = CreateDefaultSubobject<USGSCppV4_AbilitySystemComponent>(TEXT("SGSCppV4_AbilitySystemComponent"));
+	AbilitySystemComponent = CreateDefaultSubobject<USGSCppV4_Component_AbilitySystem>(TEXT("SGSCppV4_AbilitySystemComponent"));
 	AbilitySystemComponent->SetIsReplicated(false);
 
 	// Create the attribute set, this replicates by default
@@ -24,7 +24,7 @@ ASGSCppV4_Pawn::ASGSCppV4_Pawn()
 
 }
 
-USGSCppV4_AbilitySystemComponent* ASGSCppV4_Pawn::GetSGSCppAbilitySystemComponent() 
+USGSCppV4_Component_AbilitySystem* ASGSCppV4_Pawn::GetSGSCppAbilitySystemComponent() 
 {
 	return AbilitySystemComponent;
 }

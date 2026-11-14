@@ -28,7 +28,13 @@ Choosing a parental archetype for a character
 
 ![image](Pic/Pic02.png)
 
+
+
 ## Step 3
+
+Create a component by inheriting from the "SGSCppV4_Component_AbilitySystem" class, and then add it to your character.
+
+## Step 4
   a. Create a data asset containing character attributes ("**SGSCppV4_DataAsset_Attr_Character_Init**"). In this data asset, you should specify the gameplay abilities and gameplay effects to be used for initialization.
   
   b.  After you changed the character's parent, a new component "**SGSCppV4_Component_Character_Init**" appeared in it. Add a Data Asset containing data to the component's "**SGSCppV4_DataAssetInit**" variable.

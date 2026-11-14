@@ -2,7 +2,7 @@
 
 
 #include "Abilities/SGSCppV4_AbilityTask_PlayMontageAndWaitForEvent.h"
-#include "Abilities/SGSCppV4_AbilitySystemComponent.h"
+#include "Game/Components/SGSCppV4_Component_AbilitySystem.h"
 #include "AbilitySystemLog.h"
 #include "AbilitySystemGlobals.h"
 #include "GameFramework/Character.h"
@@ -26,7 +26,7 @@ void USGSCppV4_AbilityTask_PlayMontageAndWaitForEvent::Activate()
 	}
 
 	bool bPlayedMontage = false;
-	USGSCppV4_AbilitySystemComponent* SGSCppAbilitySystemComponent = GetTargetASC();
+	USGSCppV4_Component_AbilitySystem* SGSCppAbilitySystemComponent = GetTargetASC();
 
 	if (SGSCppAbilitySystemComponent)
 	{
@@ -128,7 +128,7 @@ void USGSCppV4_AbilityTask_PlayMontageAndWaitForEvent::OnDestroy(bool AbilityEnd
 		}
 	}
 
-	USGSCppV4_AbilitySystemComponent* SGSCppAbilitySystemComponent = GetTargetASC();
+	USGSCppV4_Component_AbilitySystem* SGSCppAbilitySystemComponent = GetTargetASC();
 	if (SGSCppAbilitySystemComponent)
 	{
 		SGSCppAbilitySystemComponent->RemoveGameplayEventTagContainerDelegate(EventTags, EventHandle);
@@ -198,9 +198,9 @@ bool USGSCppV4_AbilityTask_PlayMontageAndWaitForEvent::StopPlayingMontage()
 	return false;
 }
 
-USGSCppV4_AbilitySystemComponent* USGSCppV4_AbilityTask_PlayMontageAndWaitForEvent::GetTargetASC()
+USGSCppV4_Component_AbilitySystem* USGSCppV4_AbilityTask_PlayMontageAndWaitForEvent::GetTargetASC()
 {
-	return Cast<USGSCppV4_AbilitySystemComponent>(AbilitySystemComponent);
+	return Cast<USGSCppV4_Component_AbilitySystem>(AbilitySystemComponent);
 }
 
 void USGSCppV4_AbilityTask_PlayMontageAndWaitForEvent::OnMontageBlendingOut(UAnimMontage* Montage, bool bInterrupted)

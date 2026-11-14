@@ -25,41 +25,25 @@ public:
 	
 	USGSCppV4_DataAsset_Attr_Slot();
 
-	UPROPERTY(EditAnywhere, BlueprintReadOnly, Category = "Item")
-	bool AutoEquip;
-	
-	UPROPERTY(EditAnywhere, BlueprintReadOnly, Category = "Item")
-	bool Stackable;
-
-	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "Item", meta = (ClampMin = 1, Min = 1))
-	int32 CountMax = 1;
-
-	UPROPERTY(EditAnywhere, BlueprintReadOnly, Category = "Item")
+	UPROPERTY(EditAnywhere, BlueprintReadOnly, Category = "00_Slot")
 	UTexture2D* Icon;
 	
-	UPROPERTY(EditAnywhere, BlueprintReadOnly, Category = "Item")
-	FString IconName;
+	UPROPERTY(EditAnywhere, BlueprintReadOnly, Category = "00_Slot")
+	FString Slot_IconName;
 	
-	UPROPERTY(EditAnywhere, BlueprintReadOnly, Category = "Item")
-	FString NameShort;
+	UPROPERTY(EditAnywhere, BlueprintReadOnly, Category = "00_Slot")
+	FString Slot_Name;
 	
-	UPROPERTY(EditAnywhere, BlueprintReadOnly, Category = "Item")
-	FString NameFull;
+	UPROPERTY(EditAnywhere, BlueprintReadOnly, Category = "00_Slot")
+	FString Slot_Description;
 	
-	UPROPERTY(EditAnywhere, BlueprintReadOnly, Category = "Item")
-	FString DescriptionShort;
+	// *************
+	// Displays information on hover.
+	// Показыавет информацию при наведении.
+	// *************
 	
-	UPROPERTY(EditAnywhere, BlueprintReadOnly, Category = "Item")
-	FString DescriptionFull;
-
-	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "Item")
-	float Price;
-
-	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "Item")
-	float Weight;
-
-	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "Item")
-	float Cost;
+	UPROPERTY(EditAnywhere, BlueprintReadOnly, Category = "00_Slot")
+	FString Slot_Message;
 
 	// *************
 	// Данный аттрибут должен быть массивом, так как, один компонент может находится в 2 или более типах.
@@ -76,28 +60,6 @@ public:
 	/*ArrName.Add(TEXT("InventorySubType"), "");*/
 	// *************
 	
-	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category="Item")
-	TArray<FName> InventorySlotTypes;
-	
-	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category="Item")
-	TArray<FName> InventorySlotSubType;
- 
-	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "Item")
-	TSoftObjectPtr <UPrimaryDataAsset> RecipeForPlayerHave;
-	
-	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "Item")
-	TSubclassOf<AActor> PickUpActor;
-
-	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category="Item|Visual")
-	FVector2D SlotGrid = FVector2D(1, 1);
-
-	UPROPERTY(EditAnywhere, BlueprintReadOnly, Category = "Activate")
-	TSubclassOf<UGameplayEffect> AddGameplayEffect;
-
-	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "Activate")
-	TSubclassOf <UGameplayAbility> AddGameplayAbility;
-
-
 
 
 

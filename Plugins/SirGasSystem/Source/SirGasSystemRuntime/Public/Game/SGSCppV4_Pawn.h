@@ -9,7 +9,7 @@
 #include "GenericTeamAgentInterface.h"
 #include "AbilitySystemInterface.h"
 #include "Abilities/SGSCppV4_AttributeSet.h"
-#include "Abilities/SGSCppV4_AbilitySystemComponent.h"
+#include "Game/Components/SGSCppV4_Component_AbilitySystem.h"
 #include "Data/SGSCppV4_Interface_GameplayAbility.h"
 
 #include "SGSCppV4_Pawn.generated.h"
@@ -23,7 +23,7 @@ class SIRGASSYSTEMRUNTIME_API ASGSCppV4_Pawn : public APawn, public IAbilitySyst
 protected:
 	/** The component used to handle ability system interactions */
 	UPROPERTY()
-	USGSCppV4_AbilitySystemComponent* AbilitySystemComponent;
+	USGSCppV4_Component_AbilitySystem* AbilitySystemComponent;
 	
 	/** List of attributes modified by the ability system */
 	UPROPERTY()
@@ -35,7 +35,7 @@ public:
 	ASGSCppV4_Pawn();
 	
 	UFUNCTION(BlueprintPure, Category = "FSGSCpp|Getter")
-	USGSCppV4_AbilitySystemComponent* GetSGSCppAbilitySystemComponent() ;
+	USGSCppV4_Component_AbilitySystem* GetSGSCppAbilitySystemComponent() ;
 	
 	// Implement IAbilitySystemInterface
 	UAbilitySystemComponent* GetAbilitySystemComponent() const override;

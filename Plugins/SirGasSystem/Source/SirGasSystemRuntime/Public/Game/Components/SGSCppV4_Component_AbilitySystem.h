@@ -5,13 +5,13 @@
 #include "Engine.h"
 #include "Net/UnrealNetwork.h"
 #include "AbilitySystemComponent.h"
-#include "SGSCppV4_AbilitySystemComponent.generated.h"
+#include "SGSCppV4_Component_AbilitySystem.generated.h"
 
 struct FSGSCppV4Slot;
 struct FSGSCppV4_Ability_Update;
 
 class USGSCppV4_AttributeSet;
-class USGSCppV4_DataAsset_Attr_Skill;
+class USGSCppV4_DataAsset_Attr_Slot_Skill;
 class USGSCppV4_DataAsset_Attr_Character_Init;
 
 /**
@@ -19,7 +19,7 @@ class USGSCppV4_DataAsset_Attr_Character_Init;
  */
  //UCLASS(meta=(BlueprintSpawnableComponent), Blueprintable, BlueprintType, meta = (ShowWorldContextPin))
 UCLASS(ClassGroup=("FSGSCpp"), meta=(BlueprintSpawnableComponent), Blueprintable, BlueprintType, meta = (ShowWorldContextPin))
-class SIRGASSYSTEMRUNTIME_API USGSCppV4_AbilitySystemComponent : public UAbilitySystemComponent
+class SIRGASSYSTEMRUNTIME_API USGSCppV4_Component_AbilitySystem : public UAbilitySystemComponent
 {
 	GENERATED_BODY()
 	
@@ -47,7 +47,7 @@ public:
 	USGSCppV4_DataAsset_Attr_Character_Init* SGSCppV4_DataAsset_Init;
 
 	// Constructors and overrides
-	USGSCppV4_AbilitySystemComponent();
+	USGSCppV4_Component_AbilitySystem();
 
 	USGSCppV4_AttributeSet* FSGSCppV4_AttributeSet_Get();
 
@@ -60,7 +60,7 @@ public:
 	int32 GetDefaultAbilityLevel() const;
 
 	/** Version of function in AbilitySystemGlobals that returns correct type */
-	static USGSCppV4_AbilitySystemComponent* GetAbilitySystemComponentFromActor(const AActor* Actor, bool LookForComponent = false);
+	static USGSCppV4_Component_AbilitySystem* GetAbilitySystemComponentFromActor(const AActor* Actor, bool LookForComponent = false);
 
 	/** Attempts to remove any startup gameplay abilities */
 	void RemoveStartupGameplayAbilities();

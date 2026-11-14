@@ -26,7 +26,7 @@ public:
 	TArray<TSubclassOf<UGameplayEffect>> Effects;
 	
 	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category="SGSCpp")
-	TArray<USGSCppV4_DataAsset_Attr_Skill *> DataAsset_Abilities;
+	TArray<USGSCppV4_DataAsset_Attr_Slot_Skill *> DataAsset_Abilities;
 	
 	UPROPERTY(EditDefaultsOnly, BlueprintReadOnly, Category = "SGSCpp|UpdateLevel")
 	TArray<TSubclassOf<UGameplayEffect>> Effects_Update_UsePlayerLevel;

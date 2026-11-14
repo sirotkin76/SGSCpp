@@ -5,7 +5,7 @@
 #include "Abilities/SGSCppV4_AttributeSet.h"
 #include "GameplayEffect.h"
 #include "GameplayEffectExtension.h"
-#include "Abilities/SGSCppV4_AbilitySystemComponent.h"
+#include "Game/Components/SGSCppV4_Component_AbilitySystem.h"
 #include "Game/SGSCppV4_Character.h"
 
 
@@ -237,7 +237,7 @@ void USGSCppV4_AttributeSet::ExperienceCalculateLogic(float ExpNew)
 
 		ISGSCppV4_Interface_GameplayAbility::Execute_FSGSCppV4_Interface_Player_NewLevel(GetOwningActor());
 			
-		USGSCppV4_AbilitySystemComponent* local = Cast<USGSCppV4_AbilitySystemComponent>(UAbilitySystemBlueprintLibrary::GetAbilitySystemComponent(GetOwningActor()));
+		USGSCppV4_Component_AbilitySystem* local = Cast<USGSCppV4_Component_AbilitySystem>(UAbilitySystemBlueprintLibrary::GetAbilitySystemComponent(GetOwningActor()));
 		
 		local->FSGSCppV4_NewLevel();
 		local->FSGSCppV4_Effects_Update();

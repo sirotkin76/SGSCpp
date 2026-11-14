@@ -9,7 +9,7 @@
 #include "GenericTeamAgentInterface.h"
 #include "AbilitySystemInterface.h"
 #include "Abilities/SGSCppV4_AttributeSet.h"
-#include "Abilities/SGSCppV4_AbilitySystemComponent.h"
+#include "Game/Components/SGSCppV4_Component_AbilitySystem.h"
 #include "Data/SGSCppV4_Interface_GameplayAbility.h"
 
 #include "SGSCppV4_Character.generated.h"

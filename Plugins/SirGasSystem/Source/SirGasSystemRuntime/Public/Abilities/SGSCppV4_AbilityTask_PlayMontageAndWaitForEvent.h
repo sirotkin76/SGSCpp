@@ -7,7 +7,7 @@
 #include "Abilities/Tasks/AbilityTask.h"
 #include "SGSCppV4_AbilityTask_PlayMontageAndWaitForEvent.generated.h"
 
-class USGSCppV4_AbilitySystemComponent;
+class USGSCppV4_Component_AbilitySystem;
 
 /** Delegate type used, EventTag and Payload may be empty if it came from the montage callbacks */
 DECLARE_DYNAMIC_MULTICAST_DELEGATE_TwoParams(FRPGPlayMontageAndWaitForEventDelegate, FGameplayTag, EventTag, FGameplayEventData, EventData);
@@ -105,7 +105,7 @@ private:
 	bool StopPlayingMontage();
 
 	/** Returns our ability system component */
-	USGSCppV4_AbilitySystemComponent* GetTargetASC();
+	USGSCppV4_Component_AbilitySystem* GetTargetASC();
 
 	void OnMontageBlendingOut(UAnimMontage* Montage, bool bInterrupted);
 	void OnAbilityCancelled();

@@ -10,7 +10,7 @@
 #include "SGSCppV4_BFL.generated.h"
 
 class USGSCppV4_Component_Storage;
-class USGSCppV4_AbilitySystemComponent;
+class USGSCppV4_Component_AbilitySystem;
 class USGSCppV4_DataAsset_Attr;
 class USGSCppSirV4;
 
@@ -29,16 +29,16 @@ public:
 
 	
 	UFUNCTION(BlueprintCallable, Category="FSGSCpp|BFL|Storage", meta = (WorldContext = "WorldContextObject"))
-	static void FSGSCpp_BFL_Player_Skill_ActivateById(const UObject* WorldContextObject, int32 idSkill, bool &SkillIsValid, int32 &SkillLevel,  USGSCppV4_DataAsset_Attr_Skill*& SKill );
+	static void FSGSCpp_BFL_Player_Skill_ActivateById(const UObject* WorldContextObject, int32 idSkill, bool &SkillIsValid, int32 &SkillLevel,  USGSCppV4_DataAsset_Attr_Slot_Skill*& SKill );
 
 	UFUNCTION(BlueprintCallable, Category="FSGSCpp|BFL|GAS", meta = (WorldContext = "WorldContextObject"))
-	static USGSCppV4_AbilitySystemComponent* FSGSCpp_BFL_Player_AbilitySystemComponent_Get(const UObject* WorldContextObject, int32 PlayerIndex = 0);
+	static USGSCppV4_Component_AbilitySystem* FSGSCpp_BFL_Player_AbilitySystemComponent_Get(const UObject* WorldContextObject, int32 PlayerIndex = 0);
 
 	UFUNCTION(BlueprintCallable, Category="FSGSCpp|BFL|GAS", meta = (DefaultToSelf = "Caller"))
-	static bool FSGSCpp_BFL_Tag_Activate(USGSCppV4_AbilitySystemComponent* USGSCppV4_AbilitySystemComponent, FGameplayTag AbilityTag);
+	static bool FSGSCpp_BFL_Tag_Activate(USGSCppV4_Component_AbilitySystem* USGSCppV4_AbilitySystemComponent, FGameplayTag AbilityTag);
 
 	UFUNCTION(BlueprintCallable, Category="FSGSCpp|BFL|GAS", meta = (DefaultToSelf = "Caller"))
-	static void FSGSCpp_BFL_Tag_Cancel(USGSCppV4_AbilitySystemComponent* USGSCppV4_AbilitySystemComponent, FGameplayTag AbilityTag);
+	static void FSGSCpp_BFL_Tag_Cancel(USGSCppV4_Component_AbilitySystem* USGSCppV4_AbilitySystemComponent, FGameplayTag AbilityTag);
 
 
 	UFUNCTION(BlueprintCallable, Category="FSGSCpp|BFL|Inventory")

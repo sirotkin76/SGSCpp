@@ -1,21 +1,21 @@
 // Copyright (c) 2026 SirotkinAleksandr. All Rights Reserved.
 
 
-#include "Abilities/SGSCppV4_AbilitySystemComponent.h"
+#include "Game/Components/SGSCppV4_Component_AbilitySystem.h"
 #include "Game/SGSCppV4_Character.h"
 #include "Abilities/SGSCppV4_AttributeSet.h"
 #include "AbilitySystemGlobals.h"
 #include "GameplayTagContainer.h"
 #include "GameFramework/Actor.h"
-#include "DataAssets/SGSCppV4_DataAsset_Attr_Skill.h"
+#include "DataAssets/SGSCppV4_DataAsset_Attr_Slot_Skill.h"
 #include "DataAssets/SGSCppV4_DataAsset_Attr_Init_Character.h"
 
 
-USGSCppV4_AbilitySystemComponent::USGSCppV4_AbilitySystemComponent()
+USGSCppV4_Component_AbilitySystem::USGSCppV4_Component_AbilitySystem()
 {
 }
 
-USGSCppV4_AttributeSet* USGSCppV4_AbilitySystemComponent::FSGSCppV4_AttributeSet_Get()
+USGSCppV4_AttributeSet* USGSCppV4_Component_AbilitySystem::FSGSCppV4_AttributeSet_Get()
 {
 	if (!IsValid(AttributeSet))
 	{
@@ -31,14 +31,14 @@ USGSCppV4_AttributeSet* USGSCppV4_AbilitySystemComponent::FSGSCppV4_AttributeSet
 	return AttributeSet;
 }
 
-void USGSCppV4_AbilitySystemComponent::BeginPlay()
+void USGSCppV4_Component_AbilitySystem::BeginPlay()
 {
 	Super::BeginPlay();
 
 	AttributeSet = FSGSCppV4_AttributeSet_Get();
 }
 
-void USGSCppV4_AbilitySystemComponent::GetActiveAbilitiesWithTags(const FGameplayTagContainer& GameplayTagContainer,
+void USGSCppV4_Component_AbilitySystem::GetActiveAbilitiesWithTags(const FGameplayTagContainer& GameplayTagContainer,
                                                                   TArray<UGameplayAbility*>& ActiveAbilities)
 {
 	TArray<FGameplayAbilitySpec*> AbilitiesToActivate;
@@ -57,19 +57,19 @@ void USGSCppV4_AbilitySystemComponent::GetActiveAbilitiesWithTags(const FGamepla
 	}
 }
 
-int32 USGSCppV4_AbilitySystemComponent::GetDefaultAbilityLevel() const
+int32 USGSCppV4_Component_AbilitySystem::GetDefaultAbilityLevel() const
 {
 	if (IsValid(AttributeSet)) return AttributeSet->GetLevel();
 	return 0;
 }
 
-USGSCppV4_AbilitySystemComponent* USGSCppV4_AbilitySystemComponent::GetAbilitySystemComponentFromActor(const AActor* Actor,
+USGSCppV4_Component_AbilitySystem* USGSCppV4_Component_AbilitySystem::GetAbilitySystemComponentFromActor(const AActor* Actor,
 	bool LookForComponent)
 {
-	return Cast<USGSCppV4_AbilitySystemComponent>(UAbilitySystemGlobals::GetAbilitySystemComponentFromActor(Actor, LookForComponent));
+	return Cast<USGSCppV4_Component_AbilitySystem>(UAbilitySystemGlobals::GetAbilitySystemComponentFromActor(Actor, LookForComponent));
 }
 
-void USGSCppV4_AbilitySystemComponent::RemoveStartupGameplayAbilities()
+void USGSCppV4_Component_AbilitySystem::RemoveStartupGameplayAbilities()
 {
 	//check(GetAbilitySystemComponent());
 
@@ -105,22 +105,22 @@ void USGSCppV4_AbilitySystemComponent::RemoveStartupGameplayAbilities()
 	}
 }
 
-void USGSCppV4_AbilitySystemComponent::FSGSCppV4_Skill_Add(FSGSCppV4Slot DataAsset_Skill)
+void USGSCppV4_Component_AbilitySystem::FSGSCppV4_Skill_Add(FSGSCppV4Slot DataAsset_Skill)
 {
 	if (!IsValid(DataAsset_Skill.PrimaryDataAsset)) return;
 	
-	USGSCppV4_DataAsset_Attr_Skill * SGSCppV4_InvSlot_DataAssetL = Cast<USGSCppV4_DataAsset_Attr_Skill>(DataAsset_Skill.PrimaryDataAsset);
+	USGSCppV4_DataAsset_Attr_Slot_Skill * SGSCppV4_InvSlot_DataAssetL = Cast<USGSCppV4_DataAsset_Attr_Slot_Skill>(DataAsset_Skill.PrimaryDataAsset);
 	
 	if (SGSCppV4_InvSlot_DataAssetL->GameplayEffect)		FSGSCppV4_GameplayEffect_Add(		SGSCppV4_InvSlot_DataAssetL->GameplayEffect,		DataAsset_Skill.Level);
 	if (SGSCppV4_InvSlot_DataAssetL->GameplayAbility)		FSGSCppV4_Ability_Add(				SGSCppV4_InvSlot_DataAssetL->GameplayAbility,		DataAsset_Skill.Level);
 		
 }
 
-void USGSCppV4_AbilitySystemComponent::FSGSCppV4_Skill_Del(FSGSCppV4Slot DataAsset_Skill)
+void USGSCppV4_Component_AbilitySystem::FSGSCppV4_Skill_Del(FSGSCppV4Slot DataAsset_Skill)
 {
 	if (!IsValid(DataAsset_Skill.PrimaryDataAsset)) return;
 	
-	USGSCppV4_DataAsset_Attr_Skill * SGSCppV4_InvSlot_DataAssetL = Cast<USGSCppV4_DataAsset_Attr_Skill>(DataAsset_Skill.PrimaryDataAsset);
+	USGSCppV4_DataAsset_Attr_Slot_Skill * SGSCppV4_InvSlot_DataAssetL = Cast<USGSCppV4_DataAsset_Attr_Slot_Skill>(DataAsset_Skill.PrimaryDataAsset);
 	
 	if (SGSCppV4_InvSlot_DataAssetL->GameplayEffect)
 	{
@@ -133,7 +133,7 @@ void USGSCppV4_AbilitySystemComponent::FSGSCppV4_Skill_Del(FSGSCppV4Slot DataAss
 	}
 }
 
-void USGSCppV4_AbilitySystemComponent::FSGSCppV4_Effects_Update_UsePlayerLevel_Add(
+void USGSCppV4_Component_AbilitySystem::FSGSCppV4_Effects_Update_UsePlayerLevel_Add(
 	TSubclassOf<UGameplayEffect> inEffects_Update_UsePlayerLevel)
 {
 	int32 IndexL = Effects_Update_UsePlayerLevel.Find(inEffects_Update_UsePlayerLevel.Get());
@@ -145,7 +145,7 @@ void USGSCppV4_AbilitySystemComponent::FSGSCppV4_Effects_Update_UsePlayerLevel_A
 	}
 }
 
-void USGSCppV4_AbilitySystemComponent::FSGSCppV4_Effects_Update_UsePlayerLevel_Del(
+void USGSCppV4_Component_AbilitySystem::FSGSCppV4_Effects_Update_UsePlayerLevel_Del(
 	TSubclassOf<UGameplayEffect> inEffects_Update_UsePlayerLevel)
 {
 	int32 IndexL = Effects_Update_UsePlayerLevel.Find(inEffects_Update_UsePlayerLevel.Get());
@@ -163,13 +163,13 @@ void USGSCppV4_AbilitySystemComponent::FSGSCppV4_Effects_Update_UsePlayerLevel_D
 	}
 }
 
-void USGSCppV4_AbilitySystemComponent::FSGSCppV4_Abilities_Tag_Get(FGameplayTagContainer AbilityTags,
+void USGSCppV4_Component_AbilitySystem::FSGSCppV4_Abilities_Tag_Get(FGameplayTagContainer AbilityTags,
                                                                    TArray<UGameplayAbility*>& ActiveAbilities)
 {
 	GetActiveAbilitiesWithTags(AbilityTags, ActiveAbilities);
 }
 
-bool USGSCppV4_AbilitySystemComponent::FSGSCppV4_Ability_Cooldown_Tag_Get(FGameplayTagContainer CooldownTags,
+bool USGSCppV4_Component_AbilitySystem::FSGSCppV4_Ability_Cooldown_Tag_Get(FGameplayTagContainer CooldownTags,
 	float& TimeRemaining, float& CooldownDuration)
 {
 	if (CooldownTags.Num() > 0)
@@ -201,7 +201,7 @@ bool USGSCppV4_AbilitySystemComponent::FSGSCppV4_Ability_Cooldown_Tag_Get(FGamep
 	return false;
 }
 
-void USGSCppV4_AbilitySystemComponent::FSGSCppV4_Attr_Base_Get(float& AttackPower, float& DefensePower,
+void USGSCppV4_Component_AbilitySystem::FSGSCppV4_Attr_Base_Get(float& AttackPower, float& DefensePower,
 	float& MoveSpeed, float& Damage, int32& Level)
 {
 	if (!IsValid(AttributeSet)) return;
@@ -214,19 +214,19 @@ void USGSCppV4_AbilitySystemComponent::FSGSCppV4_Attr_Base_Get(float& AttackPowe
 	Level = FSGSCppV4_Attr_Level_Get();
 }
 
-int32 USGSCppV4_AbilitySystemComponent::FSGSCppV4_Attr_Level_Get()
+int32 USGSCppV4_Component_AbilitySystem::FSGSCppV4_Attr_Level_Get()
 {
 	if (IsValid(AttributeSet)) return AttributeSet->GetLevel();
 	return 0;
 }
 
-int32 USGSCppV4_AbilitySystemComponent::FSGSCppV4_Attr_Point_Get()
+int32 USGSCppV4_Component_AbilitySystem::FSGSCppV4_Attr_Point_Get()
 {
 	if (IsValid(AttributeSet)) return AttributeSet->GetPoint();
 	return 0;
 }
 
-void USGSCppV4_AbilitySystemComponent::FSGSCppV4_Attr_Health_Get(float& Health, float& HealthMax, float& Percent)
+void USGSCppV4_Component_AbilitySystem::FSGSCppV4_Attr_Health_Get(float& Health, float& HealthMax, float& Percent)
 {
 	if (!IsValid(AttributeSet)) return;
 	
@@ -235,7 +235,7 @@ void USGSCppV4_AbilitySystemComponent::FSGSCppV4_Attr_Health_Get(float& Health, 
 	Percent = Health / HealthMax;
 }
 
-void USGSCppV4_AbilitySystemComponent::FSGSCppV4_Attr_Stamina_Get(float& Stamina, float& StaminaMax, float& Percent)
+void USGSCppV4_Component_AbilitySystem::FSGSCppV4_Attr_Stamina_Get(float& Stamina, float& StaminaMax, float& Percent)
 {
 	if (!IsValid(AttributeSet)) return;
 	
@@ -244,7 +244,7 @@ void USGSCppV4_AbilitySystemComponent::FSGSCppV4_Attr_Stamina_Get(float& Stamina
 	Percent = Stamina / StaminaMax;
 }
 
-void USGSCppV4_AbilitySystemComponent::FSGSCppV4_Attr_Mana_Get(float& Mana, float& ManaMax, float& Percent)
+void USGSCppV4_Component_AbilitySystem::FSGSCppV4_Attr_Mana_Get(float& Mana, float& ManaMax, float& Percent)
 {
 	if (!IsValid(AttributeSet)) return;
 	
@@ -253,7 +253,7 @@ void USGSCppV4_AbilitySystemComponent::FSGSCppV4_Attr_Mana_Get(float& Mana, floa
 	Percent = Mana / ManaMax;
 }
 
-void USGSCppV4_AbilitySystemComponent::FSGSCppV4_Attr_Experience_Get(float& Experience, float& ExperienceMax,
+void USGSCppV4_Component_AbilitySystem::FSGSCppV4_Attr_Experience_Get(float& Experience, float& ExperienceMax,
 	float& Percent)
 {
 	if (!IsValid(AttributeSet)) return;
@@ -263,7 +263,7 @@ void USGSCppV4_AbilitySystemComponent::FSGSCppV4_Attr_Experience_Get(float& Expe
 	Percent = Experience / ExperienceMax;
 }
 
-void USGSCppV4_AbilitySystemComponent::FSGSCppV4_Attr_Water_Get(float& Water, float& WaterMax, float& Percent)
+void USGSCppV4_Component_AbilitySystem::FSGSCppV4_Attr_Water_Get(float& Water, float& WaterMax, float& Percent)
 {
 	if (!IsValid(AttributeSet)) return;
 	
@@ -272,7 +272,7 @@ void USGSCppV4_AbilitySystemComponent::FSGSCppV4_Attr_Water_Get(float& Water, fl
 	Percent = Water / WaterMax;
 }
 
-void USGSCppV4_AbilitySystemComponent::FSGSCppV4_Attr_Food_Get(float& Food, float& FoodMax, float& Percent)
+void USGSCppV4_Component_AbilitySystem::FSGSCppV4_Attr_Food_Get(float& Food, float& FoodMax, float& Percent)
 {
 	if (!IsValid(AttributeSet)) return;
 	
@@ -281,7 +281,7 @@ void USGSCppV4_AbilitySystemComponent::FSGSCppV4_Attr_Food_Get(float& Food, floa
 	Percent = Food / FoodMax;
 }
 
-void USGSCppV4_AbilitySystemComponent::FSGSCppV4_Attr_Oxygen_Get(float& Oxygen, float& OxygenMax, float& Percent)
+void USGSCppV4_Component_AbilitySystem::FSGSCppV4_Attr_Oxygen_Get(float& Oxygen, float& OxygenMax, float& Percent)
 {
 	if (!IsValid(AttributeSet)) return;
 
@@ -290,13 +290,13 @@ void USGSCppV4_AbilitySystemComponent::FSGSCppV4_Attr_Oxygen_Get(float& Oxygen, 
 	Percent = Oxygen / OxygenMax;
 }
 
-bool USGSCppV4_AbilitySystemComponent::FSGSCppV4_Abilities_Tags_Activate(FGameplayTagContainer AbilityTags,
+bool USGSCppV4_Component_AbilitySystem::FSGSCppV4_Abilities_Tags_Activate(FGameplayTagContainer AbilityTags,
                                                                          bool bAllowRemoteActivation)
 {
 	return TryActivateAbilitiesByTag(AbilityTags, bAllowRemoteActivation);
 }
 
-bool USGSCppV4_AbilitySystemComponent::FSGSCppV4_Ability_Tag_Activate(FGameplayTag AbilityTagL,
+bool USGSCppV4_Component_AbilitySystem::FSGSCppV4_Ability_Tag_Activate(FGameplayTag AbilityTagL,
                                                                       bool bAllowRemoteActivation)
 {
 	FGameplayTagContainer GameplayTagContainer;
@@ -305,7 +305,7 @@ bool USGSCppV4_AbilitySystemComponent::FSGSCppV4_Ability_Tag_Activate(FGameplayT
 	return TryActivateAbilitiesByTag(GameplayTagContainer, bAllowRemoteActivation);
 }
 
-void USGSCppV4_AbilitySystemComponent::FSGSCppV4_Ability_Tag_Cancel(FGameplayTag AbilityTag)
+void USGSCppV4_Component_AbilitySystem::FSGSCppV4_Ability_Tag_Cancel(FGameplayTag AbilityTag)
 {
 	FGameplayTagContainer GameplayTagContainer;
 	GameplayTagContainer.AddTag(AbilityTag);
@@ -321,7 +321,7 @@ void USGSCppV4_AbilitySystemComponent::FSGSCppV4_Ability_Tag_Cancel(FGameplayTag
 	}
 }
 
-void USGSCppV4_AbilitySystemComponent::FSGSCppV4_Abilities_Tags_Find(FGameplayTagContainer AbilityTags,
+void USGSCppV4_Component_AbilitySystem::FSGSCppV4_Abilities_Tags_Find(FGameplayTagContainer AbilityTags,
 	bool& AbilitiesIsFind)
 {
 	TArray<UGameplayAbility*> GetActiveAbilitiesLocal;
@@ -331,7 +331,7 @@ void USGSCppV4_AbilitySystemComponent::FSGSCppV4_Abilities_Tags_Find(FGameplayTa
 	if (GetActiveAbilitiesLocal.IsEmpty())	AbilitiesIsFind = false; else AbilitiesIsFind = true;
 }
 
-void USGSCppV4_AbilitySystemComponent::FSGSCppV4_Effects_Update()
+void USGSCppV4_Component_AbilitySystem::FSGSCppV4_Effects_Update()
 {
 	for (TSubclassOf<UGameplayEffect>& GameplayEffect : Effects_Update_UsePlayerLevel)
 	{
@@ -339,7 +339,7 @@ void USGSCppV4_AbilitySystemComponent::FSGSCppV4_Effects_Update()
 	}
 }
 
-void USGSCppV4_AbilitySystemComponent::FSGSCppV4_Game_New_Init_Attr()
+void USGSCppV4_Component_AbilitySystem::FSGSCppV4_Game_New_Init_Attr()
 {
 	// check(GetAbilitySystemComponent());
 
@@ -375,7 +375,7 @@ void USGSCppV4_AbilitySystemComponent::FSGSCppV4_Game_New_Init_Attr()
 		}
 		//AddGameplayAbilities();
 
-		for (USGSCppV4_DataAsset_Attr_Skill* StartupAbility : SGSCppV4_DataAsset_Init->DataAsset_Abilities)
+		for (USGSCppV4_DataAsset_Attr_Slot_Skill* StartupAbility : SGSCppV4_DataAsset_Init->DataAsset_Abilities)
 		{
 			FSGSCppV4_Ability_Update local;
 			
@@ -393,7 +393,7 @@ void USGSCppV4_AbilitySystemComponent::FSGSCppV4_Game_New_Init_Attr()
 	}
 }
 
-bool USGSCppV4_AbilitySystemComponent::FSGSCppV4_Ability_Add(TSubclassOf<UGameplayAbility> NewGameplayAbility, int32 level)
+bool USGSCppV4_Component_AbilitySystem::FSGSCppV4_Ability_Add(TSubclassOf<UGameplayAbility> NewGameplayAbility, int32 level)
 {
 	GiveAbility(FGameplayAbilitySpec(NewGameplayAbility, level, INDEX_NONE, this));
 	
@@ -405,7 +405,7 @@ bool USGSCppV4_AbilitySystemComponent::FSGSCppV4_Ability_Add(TSubclassOf<UGamepl
 	return true;	
 }
 
-void USGSCppV4_AbilitySystemComponent::FSGSCppV4_GameplayEffect_Add(TSubclassOf<UGameplayEffect> GameplayEffectL, int32 level)
+void USGSCppV4_Component_AbilitySystem::FSGSCppV4_GameplayEffect_Add(TSubclassOf<UGameplayEffect> GameplayEffectL, int32 level)
 {
 	FGameplayEffectContextHandle EffectContext = MakeEffectContext();
 	EffectContext.AddSourceObject(this);
@@ -417,7 +417,7 @@ void USGSCppV4_AbilitySystemComponent::FSGSCppV4_GameplayEffect_Add(TSubclassOf<
 	}
 }
 
-void USGSCppV4_AbilitySystemComponent::FSGSCppV4_Attr_Health_Set(float SetNewHealth)
+void USGSCppV4_Component_AbilitySystem::FSGSCppV4_Attr_Health_Set(float SetNewHealth)
 {
 	if (AttributeSet)
 	{
@@ -425,7 +425,7 @@ void USGSCppV4_AbilitySystemComponent::FSGSCppV4_Attr_Health_Set(float SetNewHea
 	}
 }
 
-void USGSCppV4_AbilitySystemComponent::FSGSCppV4_Attr_Level_Set(int32 NewLevel)
+void USGSCppV4_Component_AbilitySystem::FSGSCppV4_Attr_Level_Set(int32 NewLevel)
 {
 	if (FSGSCppV4_Attr_Level_Get() != NewLevel && NewLevel > 1)
 	{
@@ -439,7 +439,7 @@ void USGSCppV4_AbilitySystemComponent::FSGSCppV4_Attr_Level_Set(int32 NewLevel)
 	}
 }
 
-void USGSCppV4_AbilitySystemComponent::FSGSCppV4_Ability_Del(TSubclassOf <UGameplayAbility> UGameplayAbilityL)
+void USGSCppV4_Component_AbilitySystem::FSGSCppV4_Ability_Del(TSubclassOf <UGameplayAbility> UGameplayAbilityL)
 {
 	//if (AbilityTag.IsValid()) FSGSCppV4_Ability_Tag_Cancel(AbilityTag);
 
