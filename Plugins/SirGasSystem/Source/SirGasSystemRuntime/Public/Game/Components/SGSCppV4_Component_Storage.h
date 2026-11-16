@@ -21,12 +21,8 @@ public:
 	// Sets default values for this component's properties
 	USGSCppV4_Component_Storage();
 
-	//UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "FSGSCpp|InventarySystem|Variables")
-	UPROPERTY()
+	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "FSGSCpp|Storage|Var")
 	TArray<FSGSCppV4Slot> FSGSCpp_Slots;
-
-	UPROPERTY()
-	int32 MaxSlots;
 
 protected:
 	// Called when the game starts
@@ -38,6 +34,9 @@ public:
 
 	UFUNCTION(BlueprintCallable, BlueprintPure, Category = "FSGSCpp|Storage|Functions", meta = (DisplayName = "SGS Cpp V4 Storage Slots Get "))
 	TArray<FSGSCppV4Slot> FSGSCpp_Slots_Get();
+	
+	UFUNCTION(BlueprintCallable, BlueprintPure, Category = "FSGSCpp|Storage|Functions", meta = (DisplayName = "SGS Cpp V4 Storage Slots Get use id or index "))
+	FSGSCppV4Slot FSGSCpp_Slots_Get_Id(int32 index, bool &find);
 		
 	UFUNCTION(BlueprintCallable, Category = "FSGSCpp|Storage|Functions", meta = (DisplayName = "SGS Cpp V4 Storage Slots Set"))
 	void FSGSCpp_Slots_Set(TArray<FSGSCppV4Slot> NewItems);

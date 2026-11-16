@@ -38,6 +38,25 @@ TArray<FSGSCppV4Slot> USGSCppV4_Component_Storage::FSGSCpp_Slots_Get()
 	return  FSGSCpp_Slots;
 }
 
+FSGSCppV4Slot USGSCppV4_Component_Storage::FSGSCpp_Slots_Get_Id(int32 index, bool &find)
+{
+	FSGSCppV4Slot FSGSCpp_SlotsL;
+	if (index < 0) 
+	{
+		find = false;
+		return FSGSCpp_SlotsL;
+	}
+
+	if (index < FSGSCpp_Slots.Num())
+	{
+		find = true;
+		return FSGSCpp_Slots[index];
+	}
+	
+	find = false;
+	return FSGSCpp_SlotsL;
+}
+
 void USGSCppV4_Component_Storage::FSGSCpp_Slots_Set(TArray<FSGSCppV4Slot> NewItems)
 {
 	FSGSCpp_Slots = NewItems;
