@@ -9,6 +9,7 @@
 #include "GameFramework/Actor.h"
 #include "DataAssets/SGSCppV4_DataAsset_Attr_Slot_Skill.h"
 #include "DataAssets/SGSCppV4_DataAsset_Attr_Init_Character.h"
+#include "Net/RepLayout.h"
 
 
 USGSCppV4_Component_AbilitySystem::USGSCppV4_Component_AbilitySystem()
@@ -303,6 +304,24 @@ bool USGSCppV4_Component_AbilitySystem::FSGSCppV4_Ability_Tag_Activate(FGameplay
 	GameplayTagContainer.AddTag(AbilityTagL);
 	// bAbilitiesInitialized
 	return TryActivateAbilitiesByTag(GameplayTagContainer, bAllowRemoteActivation);
+}
+
+bool USGSCppV4_Component_AbilitySystem::FSGSCppV4_Effect_Tag_Check(FGameplayTag AbilityTagL)
+{
+
+	// Формируем запрос на поиск активных эффектов по Asset-тегу
+	FGameplayEffectQuery Query = FGameplayEffectQuery::MakeQuery_MatchAnyEffectTags(FGameplayTagContainer(AbilityTagL));
+    
+	// Получаем список хендлов всех подходящих активных эффектов
+	TArray<FActiveGameplayEffectHandle> ActiveEffects = GetActiveEffects(Query);
+
+	if ( ActiveEffects.Num() > 0 ) return true;
+	else
+	{
+		return HasMatchingGameplayTag(AbilityTagL);
+	}
+	
+	return false;
 }
 
 void USGSCppV4_Component_AbilitySystem::FSGSCppV4_Ability_Tag_Cancel(FGameplayTag AbilityTag)

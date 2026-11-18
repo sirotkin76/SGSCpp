@@ -134,16 +134,21 @@ public:
 	UFUNCTION(BlueprintPure, Category = "FSGSCpp|Getter", meta = (Keywords = "FSGSCppV4 Get Oxygen | "))
 	void FSGSCppV4_Attr_Oxygen_Get(float &Oxygen, float &OxygenMax, float &Percent);
 
+
+	
 	/**
 	* ЛОГИКА С ТЕГАМИ
 	*/
 
-	UFUNCTION(BlueprintCallable, Category = "FSGSCpp|Component|Abilities", meta = (Keywords = "FSGSCppV4 Activate Abilities With Tags"))
+	UFUNCTION(BlueprintCallable, Category = "FSGSCpp|Component|Abilities", meta = (Keywords = "SGS Cpp V4 Activate Abilities With Tags"))
 	bool FSGSCppV4_Abilities_Tags_Activate(FGameplayTagContainer AbilityTags, bool bAllowRemoteActivation = true);
 
 	
-	UFUNCTION(BlueprintCallable, Category = "FSGSCpp|Component|Ability", meta = (Keywords = "FSGSCppV4 Activate Ability With Tag"))
+	UFUNCTION(BlueprintCallable, Category = "FSGSCpp|Component|Ability", meta = (Keywords = "SGS Cpp V4 Activate Ability With Tag"))
 	bool FSGSCppV4_Ability_Tag_Activate(FGameplayTag AbilityTagL, bool bAllowRemoteActivation = true);
+
+	UFUNCTION(BlueprintPure, Category = "FSGSCpp|Component|Ability", meta = (Keywords = "SGS Cpp V4 Effect-Check|Find-Tag"))
+	bool FSGSCppV4_Effect_Tag_Check(FGameplayTag AbilityTagL);
 
 	/**
 	* Cancel
