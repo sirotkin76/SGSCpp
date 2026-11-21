@@ -86,6 +86,12 @@ void USGSCppV4_BFL::FSGSCppV4_BFL_Storage_GetSlot_UseId(USGSCppV4_Component_Stor
 	
 	TArray<FSGSCppV4Slot> SlotsL = Storage->FSGSCpp_Slots_Get();
 
+	if (Get_Id < 0)
+	{
+		IsValid = false;
+		return ;
+	}
+	
 	if ((SlotsL.Num()-1) < Get_Id)
 	{
 		IsValid = false;

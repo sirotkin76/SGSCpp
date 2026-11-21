@@ -41,4 +41,7 @@ public:
 	UFUNCTION(BlueprintCallable, Category = "FSGSCpp|Storage|Functions", meta = (DisplayName = "SGS Cpp V4 Storage Slots Set"))
 	void FSGSCpp_Slots_Set(TArray<FSGSCppV4Slot> NewItems);
 
+	UFUNCTION(BlueprintCallable, Category = "FSGSCpp|Storage|Functions", meta = (DisplayName = "SGS Cpp V4 Storage - Creates new empty slots (ADD)"))
+	void FSGSCpp_Slots_InitEmpty_SetNew(int32 CountNewEmptySlots);
+
 };

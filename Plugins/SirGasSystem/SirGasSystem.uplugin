@@ -1,7 +1,7 @@
 {
 	"Version": 1,
 	"FileVersion": 3,
-	"VersionName": "4.03",
+	"VersionName": "4.03.2",
 	"EngineAssociation": "5.8",
 	"FriendlyName": "SGS | SGSCpp | Sir Gas System | Gas",
 	"Description": "The plugin simplifies the creation of mechanics and speeds up game development.",

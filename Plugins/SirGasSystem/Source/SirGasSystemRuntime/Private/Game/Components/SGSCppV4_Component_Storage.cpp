@@ -61,3 +61,14 @@ void USGSCppV4_Component_Storage::FSGSCpp_Slots_Set(TArray<FSGSCppV4Slot> NewIte
 {
 	FSGSCpp_Slots = NewItems;
 }
+
+void USGSCppV4_Component_Storage::FSGSCpp_Slots_InitEmpty_SetNew(int32 CountNewEmptySlots)
+{
+	FSGSCppV4Slot FSGSCppV4SlotLocal;
+	FSGSCppV4SlotLocal.PrimaryDataAsset = nullptr;
+	
+	for (int32 i = 0; i < CountNewEmptySlots; i++)
+	{
+		FSGSCpp_Slots.Add(FSGSCppV4SlotLocal);
+	}
+}
